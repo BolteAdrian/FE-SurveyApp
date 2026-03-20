@@ -1,4 +1,4 @@
-import type { SurveyResponse, Answer } from '../types/survey';
+import type { SurveyResponse, IAnswer } from '../types/survey';
 import { api } from './client';
 
 export const publicApi = {
@@ -9,7 +9,7 @@ export const publicApi = {
     return res.data;
   },
 
-  async submitResponse(slug: string, token: string, answers: Answer[]) {
+  async submitResponse(slug: string, token: string, answers: IAnswer[]) {
     const res = await api.post(
       `/api/public/surveys/${slug}/responses?t=${token}`,
       { answers }

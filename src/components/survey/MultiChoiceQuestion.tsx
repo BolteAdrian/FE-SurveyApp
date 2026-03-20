@@ -1,56 +1,89 @@
+import type { QuestionsProps, IOption } from "../../types/survey";
+
 export default function MultiChoiceQuestion({
   question,
   answers,
   setAnswers,
-}: any) {
-  const selected = answers.find((a: any) => a.question_id === question.id);
+}: QuestionsProps) {
+  // These are the answers for this specific question
+  const questionAnswers = answers.filter(
+    (a) => "optionId" in a && a.questionId === question.id,
+  ) as ({ questionId: string; optionId: string })[];
+
+  const selectedOptionIds = new Set(questionAnswers.map((a) => a.optionId));
 
   const toggleOption = (optionId: string) => {
-    let selectedOptions = selected?.option_ids || [];
+    const max = question.maxSelections || 1;
+    const isSelected = selectedOptionIds.has(optionId);
 
-    if (selectedOptions.includes(optionId)) {
-      selectedOptions = selectedOptions.filter((id: string) => id !== optionId);
-    } else {
-      if (selectedOptions.length >= question.max_selections) return;
-      selectedOptions.push(optionId);
+    if (isSelected) {
+      const newAnswers = answers.filter(
+        (a) =>
+          !(
+            a.questionId === question.id &&
+            "optionId" in a &&
+            a.optionId === optionId
+          ),
+      );
+      setAnswers(newAnswers);
+      return;
     }
 
-    const updated = answers.filter((a: any) => a.question_id !== question.id);
-    updated.push({
-      question_id: question.id,
-      option_ids: selectedOptions,
-    });
-
-    setAnswers(updated);
+    // It's not selected. We are adding a selection.
+    if (max === 1) {
+      // remove all previous answers for this question and add the new one
+      const otherAnswers = answers.filter((a) => a.questionId !== question.id);
+      const newAnswer = { questionId: question.id!, optionId };
+      setAnswers([...otherAnswers, newAnswer]);
+    } else {
+      // max > 1
+      if (selectedOptionIds.size < max) {
+        const newAnswer = { questionId: question.id!, optionId };
+        setAnswers([...answers, newAnswer]);
+      }
+    }
   };
 
-  const isMaxReached =
-    (selected?.option_ids || []).length >= question.max_selections;
+  const max = question.maxSelections || 1;
+  const isMaxReached = selectedOptionIds.size >= max;
 
   return (
     <div>
-      <h3>{question.title}</h3>
+      <h3 className="font-semibold">{question.title}</h3>
+      {max > 1 && (
+        <p className="text-sm text-gray-500">
+          Select up to {max} options
+        </p>
+      )}
 
-      {question.options.map((opt: any) => {
-        const isSelected = selected?.option_ids?.includes(opt.id);
+      <div className="mt-2 space-y-1">
+        {question.options?.map((opt: IOption) => {
+          const isSelected = selectedOptionIds.has(opt.id);
 
-        return (
-          <div
-            key={opt.id}
-            style={{
-              opacity: !isSelected && isMaxReached ? 0.4 : 1,
-            }}
-          >
-            <input
-              type="checkbox"
-              checked={isSelected}
-              disabled={!isSelected && isMaxReached}
-              onChange={() => toggleOption(opt.id)}
-            />
-            {opt.label}
-          </div>
-        );
-      })}
+          return (
+            <div
+              key={opt.id}
+              onClick={() => toggleOption(opt.id)}
+              className="p-2 rounded-lg flex items-center"
+              style={{
+                opacity: !isSelected && isMaxReached ? 0.6 : 1,
+                cursor:
+                  !isSelected && isMaxReached ? "not-allowed" : "pointer",
+              }}
+            >
+              <input
+                type={max > 1 ? "checkbox" : "radio"}
+                name={question.id}
+                checked={isSelected}
+                readOnly
+                disabled={!isSelected && isMaxReached}
+                className="mr-2"
+              />
+              <label>{opt.label}</label>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

@@ -1,34 +1,46 @@
+import type { IAnswer, QuestionsProps } from "../../types/survey";
+
 export default function TextQuestion({
   question,
   answers,
   setAnswers,
-}: any) {
-  const existing = answers.find((a: any) => a.question_id === question.id);
+}: QuestionsProps) {
+  const textAnswer = answers.find(
+    (a) => a.questionId === question.id && "textValue" in a,
+  ) as { questionId: string; textValue: string } | undefined;
 
-  const handleChange = (value: string) => {
-    const updated = answers.filter((a: any) => a.question_id !== question.id);
+  const value = textAnswer?.textValue || "";
 
-    updated.push({
-      question_id: question.id,
-      text_value: value,
-    });
+  const handleChange = (newValue: string) => {
+    const otherAnswers = answers.filter((a) => a.questionId !== question.id);
 
-    setAnswers(updated);
+    if (newValue) {
+      const newAnswer: IAnswer = {
+        questionId: question.id!,
+        textValue: newValue,
+      };
+      setAnswers([...otherAnswers, newAnswer]);
+    } else {
+      setAnswers(otherAnswers);
+    }
   };
 
   return (
     <div>
-      <h3>{question.title}</h3>
+      <h3 className="font-semibold">{question.title}</h3>
 
       <textarea
-        maxLength={question.max_length}
-        value={existing?.text_value || ''}
+        maxLength={question.maxLength}
+        value={value}
         onChange={(e) => handleChange(e.target.value)}
+        className="w-full p-2 border rounded-md mt-2"
       />
 
-      <div>
-        {(existing?.text_value?.length || 0)} / {question.max_length}
-      </div>
+      {question.maxLength && (
+        <div className="text-sm text-right text-gray-500">
+          {value.length} / {question.maxLength}
+        </div>
+      )}
     </div>
   );
 }

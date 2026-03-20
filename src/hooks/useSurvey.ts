@@ -1,16 +1,18 @@
-import { useEffect, useState } from 'react';
-import { publicApi } from '../api/publicApi';
-import type { SurveyResponse, Answer } from '../types/survey';
+import { useEffect, useState } from "react";
+import { publicApi } from "../api/publicApi";
+import type { SurveyResponse, IAnswer } from "../types/survey";
+import { validateAnswers } from "../utils/validateAnswers";
 
 export function useSurvey(slug: string, token: string) {
   const [data, setData] = useState<SurveyResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [answers, setAnswers] = useState<Answer[]>([]);
-  const [loading, setLoading] = useState(true);
-
+  const [answers, setAnswers] = useState<IAnswer[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  
   useEffect(() => {
     if (!token) {
-      setError('MISSING');
+      setError("MISSING");
       setLoading(false);
       return;
     }
@@ -18,24 +20,32 @@ export function useSurvey(slug: string, token: string) {
     publicApi
       .getSurvey(slug, token)
       .then((res) => {
-        if ('message' in res) {
+        if ("message" in res) {
           setError(res.message);
         } else {
           setData(res);
         }
       })
-      .catch(() => setError('INVALID'))
+      .catch(() => setError("INVALID"))
       .finally(() => setLoading(false));
   }, [slug, token]);
 
   const submit = async () => {
     if (!data) return;
 
+    const validationErrors = validateAnswers(data.survey.questions, answers);
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
     await publicApi.submitResponse(slug, token, answers);
   };
 
   return {
     data,
+    errors,
     error,
     answers,
     setAnswers,

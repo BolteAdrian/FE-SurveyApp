@@ -1,29 +1,29 @@
-export type SurveyStatus = 'DRAFT' | 'PUBLISHED' | 'CLOSED';
+export type SurveyStatus = "DRAFT" | "PUBLISHED" | "CLOSED";
 
-export type QuestionType = 'MULTI_CHOICE' | 'TEXT';
+export type QuestionType = "MULTI_CHOICE" | "TEXT";
 
-export interface Survey {
-  id: string;
+export interface ISurvey {
+  id?: string;
   title: string;
   slug: string;
   status: SurveyStatus;
-  questions: Question[];
+  questions: IQuestion[];
 }
 
-export interface Question {
-  id: string;
+export interface IQuestion {
+  id?: string;
   title: string;
   type: QuestionType;
 
   // multi choice
-  options?: Option[];
-  max_selections?: number;
+  options?: IOption[];
+  maxSelections?: number;
 
   // text
-  max_length?: number;
+  maxLength?: number;
 }
 
-export interface Option {
+export interface IOption {
   id: string;
   label: string;
 }
@@ -35,19 +35,25 @@ export interface Invitation {
 }
 
 export interface SurveyResponse {
-  survey: Survey;
+  survey: ISurvey;
   invitation: Invitation;
 }
 
 /**
  * Answers
  */
-export type Answer =
+export type IAnswer =
   | {
-      question_id: string;
-      option_ids: string[];
+      questionId: string;
+      optionId: string;
     }
   | {
-      question_id: string;
-      text_value: string;
+      questionId: string;
+      textValue: string;
     };
+
+export interface QuestionsProps {
+  question: IQuestion;
+  answers: IAnswer[];
+  setAnswers: (answers: IAnswer[]) => void;
+}
