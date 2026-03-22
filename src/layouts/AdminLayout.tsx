@@ -27,7 +27,7 @@ export default function AdminLayout() {
   const isContactsPage = location.pathname === "/admin/contacts";
 
   const handlePlusAction = () => {
-    if (isAdminPage) navigate("/admin/new");
+    if (isAdminPage) navigate("/admin/surveys/new");
     else if (isContactsPage) setIsListModalOpen(true);
     setIsMenuOpen(false);
   };

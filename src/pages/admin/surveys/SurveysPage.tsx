@@ -4,6 +4,7 @@ import { adminApi } from "../../../api/adminApi";
 import { type ISurveyWithCount, SurveyStatus } from "../../../types/survey";
 import { useTranslation } from "react-i18next";
 import { ConfirmModal } from "../../../components/ConfirmModal";
+import { toast } from "react-toastify";
 
 export default function SurveysPage() {
   const { t } = useTranslation();
@@ -15,26 +16,27 @@ export default function SurveysPage() {
     [],
   );
 
-  // =============================
   // Modal states
-  // =============================
   const [modalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState<
     "DELETE" | "PUBLISH" | "CLOSE" | null
   >(null);
   const [selectedSurvey, setSelectedSurvey] = useState<string | null>(null);
 
-  // =============================
   // Fetch surveys
-  // =============================
   const fetchAllSurveys = async () => {
-    const data = await adminApi.getSurveys();
-    setAllSurveys(data);
-    setFilteredSurveys(
-      activeFilter === "ALL"
-        ? data
-        : data.filter((s) => s.status === activeFilter),
-    );
+    try {
+      const data = await adminApi.getSurveys();
+      setAllSurveys(data);
+      setFilteredSurveys(
+        activeFilter === "ALL"
+          ? data
+          : data.filter((s) => s.status === activeFilter),
+      );
+    } catch (err) {
+      console.error(err);
+      toast.error(t("SURVEY.FETCH_ERROR"));
+    }
   };
 
   useEffect(() => {
@@ -50,19 +52,22 @@ export default function SurveysPage() {
       );
     } else {
       const fetchFiltered = async () => {
-        const data =
-          activeFilter === "ALL"
-            ? await adminApi.getSurveys()
-            : await adminApi.getSurveys(activeFilter);
-        setFilteredSurveys(data);
+        try {
+          const data =
+            activeFilter === "ALL"
+              ? await adminApi.getSurveys()
+              : await adminApi.getSurveys(activeFilter);
+          setFilteredSurveys(data);
+        } catch (err) {
+          console.error(err);
+          toast.error(t("SURVEY.FETCH_ERROR"));
+        }
       };
       fetchFiltered();
     }
   }, [activeFilter, allSurveys]);
 
-  // =============================
   // Styles
-  // =============================
   const getStatusStyles = (status: string) => {
     switch (status) {
       case SurveyStatus.PUBLISHED:
@@ -86,9 +91,7 @@ export default function SurveysPage() {
     ALL: "border-blue-500/50 text-blue-400 bg-blue-500/5 shadow-[0_0_15px_rgba(59,130,246,0.1)]",
   };
 
-  // =============================
   // Modal handlers
-  // =============================
   const openModal = (
     type: "DELETE" | "PUBLISH" | "CLOSE",
     surveyId: string,
@@ -101,14 +104,27 @@ export default function SurveysPage() {
   const handleModalConfirm = async () => {
     if (!selectedSurvey || !modalType) return;
 
-    if (modalType === "DELETE") await adminApi.deleteSurvey(selectedSurvey);
-    if (modalType === "PUBLISH") await adminApi.publishSurvey(selectedSurvey);
-    if (modalType === "CLOSE") await adminApi.closeSurvey(selectedSurvey);
-
-    setModalOpen(false);
-    setSelectedSurvey(null);
-    setModalType(null);
-    await fetchAllSurveys();
+    try {
+      if (modalType === "DELETE") {
+        await adminApi.deleteSurvey(selectedSurvey);
+        toast.success(t("SURVEY.DELETED"));
+      }
+      if (modalType === "PUBLISH") {
+        await adminApi.publishSurvey(selectedSurvey);
+        toast.success(t("SURVEY.PUBLISHED"));
+      }
+      if (modalType === "CLOSE") {
+        await adminApi.closeSurvey(selectedSurvey);
+        toast.success(t("SURVEY.CLOSED"));
+      }
+      setModalOpen(false);
+      setSelectedSurvey(null);
+      setModalType(null);
+      await fetchAllSurveys();
+    } catch (err) {
+      console.error(err);
+      toast.error(t("SURVEY.ACTION_ERROR"));
+    }
   };
 
   const handleModalCancel = () => {
@@ -117,9 +133,7 @@ export default function SurveysPage() {
     setModalType(null);
   };
 
-  // =============================
   // Render
-  // =============================
   return (
     <div className="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
       {/* Confirm Modal */}
@@ -154,7 +168,6 @@ export default function SurveysPage() {
           ].map((f) => {
             const filterValue = f === t("SURVEY.ALL") ? "ALL" : f.toUpperCase();
             const isActive = activeFilter === filterValue;
-
             return (
               <button
                 key={f}
@@ -186,9 +199,7 @@ export default function SurveysPage() {
                   {s.title}
                 </h2>
                 <div
-                  className={`flex items-center gap-2 px-2.5 py-0.5 rounded border text-[10px] font-bold uppercase tracking-widest ${getStatusStyles(
-                    s.status,
-                  )}`}
+                  className={`flex items-center gap-2 px-2.5 py-0.5 rounded border text-[10px] font-bold uppercase tracking-widest ${getStatusStyles(s.status)}`}
                 >
                   {t(`SURVEY.STATUS.${s.status}`)}
                 </div>
@@ -233,7 +244,6 @@ export default function SurveysPage() {
                   : t("SURVEY.EDIT")}
               </button>
 
-              {/* DRAFT ACTIONS */}
               {s.status === SurveyStatus.DRAFT && (
                 <>
                   <button
@@ -251,7 +261,6 @@ export default function SurveysPage() {
                 </>
               )}
 
-              {/* PUBLISHED ACTIONS */}
               {s.status === SurveyStatus.PUBLISHED && (
                 <button
                   onClick={() => openModal("CLOSE", s.id as string)}

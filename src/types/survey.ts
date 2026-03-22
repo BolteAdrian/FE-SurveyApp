@@ -32,7 +32,7 @@ export interface IQuestion {
   id?: string;
   title: string;
   type: (typeof QuestionType)[keyof typeof QuestionType];
-  surveyId: string;
+  surveyId?: string;
   required: boolean;
   order: number;
   // multi choice
@@ -76,4 +76,10 @@ export interface QuestionsProps {
   question: IQuestion;
   answers: IAnswer[];
   setAnswers: (answers: IAnswer[]) => void;
+}
+
+export interface IUser {
+  id: string;
+  name: string;
+  email: string;
 }

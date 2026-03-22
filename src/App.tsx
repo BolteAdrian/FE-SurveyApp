@@ -10,16 +10,17 @@ import SurveyClosed from "./pages/public/SurveyClosed";
 import LoginPage from "./pages/admin/auth/LoginPage";
 import RegisterPage from "./pages/admin/auth/RegisterPage";
 import { AuthProvider } from "./contexts/AuthContext";
-import QuestionEditor from "./pages/admin/surveys/QuestionEditor";
 import SurveyEditor from "./pages/admin/surveys/SurveyEditor";
 import SurveysPage from "./pages/admin/surveys/SurveysPage";
 import ListsPage from "./pages/admin/lists/ListsPage";
 import ListDetailsPage from "./pages/admin/lists/ListPage";
 import InvitationPage from "./pages/admin/surveys/InvitationPage";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
     <AuthProvider>
+      <ToastContainer position="top-right" autoClose={3000} />
       <BrowserRouter>
         <Routes>
           {/* PUBLIC */}
@@ -45,14 +46,6 @@ function App() {
             <Route path="surveys" element={<SurveysPage />} />
             <Route path="surveys/new" element={<SurveyEditor />} />
             <Route path="surveys/:id" element={<SurveyEditor />} />
-            <Route
-              path="surveys/:surveyId/question/new"
-              element={<QuestionEditor />}
-            />
-            <Route
-              path="surveys/:surveyId/question/:id"
-              element={<QuestionEditor />}
-            />
             <Route path="surveys/:id/results" element={<ResultsPage />} />
             <Route
               path="surveys/:id/invitations"

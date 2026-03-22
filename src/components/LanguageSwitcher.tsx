@@ -1,11 +1,12 @@
 import { useTranslation } from "react-i18next";
-
+import { api } from "../api/client";
 export default function LanguageSwitcher({ isMobile = false }) {
   const { i18n } = useTranslation();
 
   const changeLang = (lang: string) => {
     i18n.changeLanguage(lang);
     localStorage.setItem("lang", lang);
+    api.defaults.headers["Accept-Language"] = lang;
   };
 
   return (

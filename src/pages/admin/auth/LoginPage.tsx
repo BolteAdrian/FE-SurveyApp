@@ -24,8 +24,8 @@ export default function LoginPage() {
     setLoading(true);
     setError(null);
     try {
-      const { token } = await adminApi.login({ email, password });
-      login(token);
+      const data = await adminApi.login({ email, password });
+      login(data.token, data.user);
       navigate("/admin");
     } catch (err) {
       setError(t("AUTH.INVALID_CREDENTIALS"));
