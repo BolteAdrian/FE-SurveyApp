@@ -1,3 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #111114;
+    color: #e8e6e1;
+  }
+
+  input,
+  textarea,
+  select {
+    background-color: #1e1e24;
+    color: #e8e6e1;
+    border-color: #374151; 
+    outline: none;
+  }
+
+  ::placeholder {
+    color: #6b7280; 
+  }
+
+  .input-dark {
+  @apply w-full mb-4 p-2 rounded-lg border border-[#374151] bg-[#1e1e24] text-[#e8e6e1] placeholder-[#6b7280] outline-none;
+}
+
+/* Autofill fix */
+.input-dark:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #1e1e24 inset;
+  -webkit-text-fill-color: #e8e6e1;
+}
+}

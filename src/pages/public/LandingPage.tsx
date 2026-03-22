@@ -1,7 +1,7 @@
 export default function LandingPage() {
   return (
     <div>
-      <h1>ISurvey Platform</h1>
+      <h2>ISurvey Platform</h2>
       <p>Use your invitation link to access a survey</p>
     </div>
   );

@@ -1,0 +1,54 @@
+{
+  "NAV": {
+    "SURVEY": "Sondaje",
+    "CONTACTS": "Liste contacte"
+  },
+  "SURVEY": {
+    "NEW": "Sondaj nou",
+    "TITLE": "Titlu sondaj",
+    "MY_SURVEYS": "Sondajele mele",
+    "ALL": "Toate",
+    "DRAFT": "Draft",
+    "PUBLISHED": "Publicate",
+    "CLOSED": "Închise",
+    "STATUS": {
+      "DRAFT": "Draft",
+      "PUBLISHED": "Publicat",
+      "CLOSED": "Închis"
+    },
+    "SLUG": "Slug",
+    "QUESTIONS": "întrebări",
+    "CREATED": "creat",
+    "EDIT": "Editează",
+    "RESULTS": "Rezultate",
+    "PUBLISH": "Publică",
+    "CLOSE": "Închide",
+    "DELETE": "Șterge",
+    "NO_SURVEYS_FOUND": "Niciun sondaj găsit pentru categoria \"{{filter}}\"",
+    "CONFIRM_DELETE": "Sigur vrei să ștergi acest sondaj?",
+    "CANCEL": "Anulează",
+    "CONFIRM": "Confirmă",
+    "CONFIRM_PUBLISH": "Are you sure you want to publish this survey?",
+    "CONFIRM_CLOSE": "Are you sure you want to close this survey?"
+  },
+  "CONTACTS": {
+    "NEW_LIST": "Listă nouă"
+  },
+  "AUTH": {
+    "FILL_ALL_FIELDS": "Completează toate câmpurile.",
+    "LOGIN_TITLE": "Autentificare Admin",
+    "EMAIL": "Email",
+    "PASSWORD": "Parolă",
+    "LOGIN": "Autentificare",
+    "LOGGING_IN": "Se autentifică...",
+    "INVALID_CREDENTIALS": "Email sau parolă incorectă.",
+    "NO_ACCOUNT": "Nu ai cont?",
+    "REGISTER": "Înregistrează-te",
+    "LOGOUT": "Deconectare",
+    "REGISTER_TITLE": "Creează Cont",
+    "NAME": "Nume",
+    "REGISTERING": "Se înregistrează...",
+    "REGISTER_ERROR": "Înregistrarea a eșuat. Încearcă din nou.",
+    "HAVE_ACCOUNT": "Ai deja cont?"
+  }
+}

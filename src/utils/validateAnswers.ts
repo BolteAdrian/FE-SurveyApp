@@ -1,4 +1,4 @@
-import type { IQuestion, IAnswer } from "../types/survey";
+import { type IQuestion, type IAnswer, QuestionType } from "../types/survey";
 
 export function validateAnswers(
   questions: IQuestion[],
@@ -7,32 +7,34 @@ export function validateAnswers(
   const errors: Record<string, string> = {};
 
   for (const q of questions) {
+    if (!q.id) continue;
+
     const answer = answers.find((a) => a.questionId === q.id);
 
-    if (q.type === 'MULTI_CHOICE') {
-      const selected = answer?.optionId;
+    if (q.type === QuestionType.CHOICE) {
+      const selected = answer && 'optionId' in answer ? answer.optionId : '';
 
-      if (!selected.length) {
+      if (!selected?.length) {
         errors[q.id] = 'Please select at least one option';
       }
 
       if (
-        q.max_selections &&
-        selected.length > q.max_selections
+        q.maxSelections && 
+        selected.length > q.maxSelections
       ) {
-        errors[q.id] = `Max ${q.max_selections} selections`;
+        errors[q.id] = `Max ${q.maxSelections} selections`;
       }
     }
 
-    if (q.type === 'TEXT') {
-      const text = answer?.textValue || '';
+    if (q.type === QuestionType.TEXT) {
+      const text = answer && 'textValue' in answer ? answer.textValue : '';
 
       if (!text.trim()) {
         errors[q.id] = 'Required field';
       }
 
-      if (q.max_length && text.length > q.max_length) {
-        errors[q.id] = `Max ${q.max_length} chars`;
+      if (q.maxLength && text.length > q.maxLength) {
+        errors[q.id] = `Max ${q.maxLength} chars`;
       }
     }
   }

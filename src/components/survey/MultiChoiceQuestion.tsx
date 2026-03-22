@@ -8,7 +8,7 @@ export default function MultiChoiceQuestion({
   // These are the answers for this specific question
   const questionAnswers = answers.filter(
     (a) => "optionId" in a && a.questionId === question.id,
-  ) as ({ questionId: string; optionId: string })[];
+  ) as { questionId: string; optionId: string }[];
 
   const selectedOptionIds = new Set(questionAnswers.map((a) => a.optionId));
 
@@ -48,42 +48,65 @@ export default function MultiChoiceQuestion({
   const isMaxReached = selectedOptionIds.size >= max;
 
   return (
-    <div>
-      <h3 className="font-semibold">{question.title}</h3>
-      {max > 1 && (
-        <p className="text-sm text-gray-500">
-          Select up to {max} options
-        </p>
-      )}
+    <div className="space-y-6">
+      <div className="space-y-2">
+        <h3 className="text-lg font-mono font-bold leading-tight">
+          {question.order + 1}. {question.title}{" "}
+          {question.required && <span className="text-red-500">*</span>}
+        </h3>
+        {max > 1 && (
+          <p className="text-[10px] font-mono text-gray-600 uppercase tracking-widest">
+            Selectează maxim {max} opțiuni
+          </p>
+        )}
+      </div>
 
-      <div className="mt-2 space-y-1">
+      <div className="space-y-3">
         {question.options?.map((opt: IOption) => {
-          const isSelected = selectedOptionIds.has(opt.id);
+          const isSelected = selectedOptionIds.has(opt.id as string);
+          const disabled = !isSelected && isMaxReached;
 
           return (
-            <div
+            <button
               key={opt.id}
-              onClick={() => toggleOption(opt.id)}
-              className="p-2 rounded-lg flex items-center"
-              style={{
-                opacity: !isSelected && isMaxReached ? 0.6 : 1,
-                cursor:
-                  !isSelected && isMaxReached ? "not-allowed" : "pointer",
-              }}
+              disabled={disabled}
+              onClick={() => toggleOption(opt.id as string)}
+              className={`w-full p-4 rounded-xl border flex items-center justify-between transition-all duration-200 group
+                ${
+                  isSelected
+                    ? "border-emerald-500 bg-emerald-500/5 text-emerald-50"
+                    : "border-gray-800 bg-[#111114] text-gray-400 hover:border-gray-600"
+                }
+                ${disabled ? "opacity-30 cursor-not-allowed" : "cursor-pointer"}
+              `}
             >
-              <input
-                type={max > 1 ? "checkbox" : "radio"}
-                name={question.id}
-                checked={isSelected}
-                readOnly
-                disabled={!isSelected && isMaxReached}
-                className="mr-2"
-              />
-              <label>{opt.label}</label>
-            </div>
+              <div className="flex items-center gap-3">
+                <div
+                  className={`w-5 h-5 rounded border flex items-center justify-center transition-colors
+                  ${isSelected ? "bg-emerald-500 border-emerald-500" : "border-gray-700 bg-transparent group-hover:border-gray-500"}`}
+                >
+                  {isSelected && (
+                    <span className="text-[#111114] text-[10px]">✔</span>
+                  )}
+                </div>
+                <span className="text-sm font-mono">{opt.label}</span>
+              </div>
+
+              {!isSelected && isMaxReached && (
+                <span className="text-[9px] font-mono text-[#e9c46a] tracking-tighter">
+                  MAXIM ATINS
+                </span>
+              )}
+            </button>
           );
         })}
       </div>
+
+      {max > 1 && (
+        <p className="text-[11px] font-mono text-[#e9c46a]">
+          {selectedOptionIds.size}/{max} selecții utilizate
+        </p>
+      )}
     </div>
   );
 }
