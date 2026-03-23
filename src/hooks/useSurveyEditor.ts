@@ -6,6 +6,7 @@ import { useSurveyContext } from "../contexts/SurveyContext";
 import { useAuth } from "../contexts/AuthContext";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 /**
  * Custom hook for managing survey creation and editing.
@@ -16,9 +17,13 @@ export function useSurveyEditor(surveyId?: string) {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [slug, setSlug] = useState<string>("");
+  const [status, setStatus] = useState<
+    (typeof SurveyStatus)[keyof typeof SurveyStatus]
+  >(SurveyStatus.DRAFT);
   const { questions, setQuestions } = useSurveyContext();
   const [loading, setLoading] = useState<boolean>(false);
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   /**
    * Fetch survey data when a surveyId is provided.
@@ -34,6 +39,7 @@ export function useSurveyEditor(surveyId?: string) {
             setTitle(survey.title);
             setDescription(survey.description || "");
             setSlug(survey.slug);
+            setStatus(survey.status);
             setQuestions(survey.questions || []);
           }
         } catch (err) {
@@ -117,6 +123,7 @@ export function useSurveyEditor(surveyId?: string) {
             : t("SURVEY.PUBLISHED_SUCCESS"),
         );
       }
+      navigate("/surveys");
     } catch (err) {
       console.error(err);
       toast.error(t("SURVEY.SAVE_ERROR"));
@@ -126,6 +133,7 @@ export function useSurveyEditor(surveyId?: string) {
   };
 
   return {
+    status,
     title,
     setTitle,
     description,

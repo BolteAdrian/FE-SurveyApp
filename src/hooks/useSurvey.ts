@@ -44,14 +44,23 @@ export function useSurvey(slug: string, token: string) {
     publicApi
       .getSurvey(slug, token)
       .then((res) => {
-        // API may return an error object instead of survey data
         if ("message" in res) {
           setError(res.message);
         } else {
           setData(res);
         }
       })
-      .catch(() => setError("INVALID_LINK"))
+      .catch((err) => {
+        const serverMessage = err.response?.data?.message;
+
+        if (serverMessage === "SURVEY_CLOSED") {
+          setError("SURVEY_CLOSED");
+        } else if (serverMessage === "ALREADY_SUBMITTED") {
+          setError("ALREADY_SUBMITTED");
+        } else {
+          setError("INVALID_LINK");
+        }
+      })
       .finally(() => setLoading(false));
   }, [slug, token]);
 

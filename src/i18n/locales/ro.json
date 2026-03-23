@@ -4,6 +4,12 @@
     "CONTACTS": "Liste contacte"
   },
   "SURVEY": {
+    "SELECTIONS": "selecții",
+    "CHARACTERS": "caractere",
+    "NO_TITLE": "Fără titlu",
+    "MIN_TWO": "minim 2",
+    "OPTION": "Opțiune",
+    "ACTIONS": "Acțiuni",
     "MAX_OPTIONS": "Selectează maxim {{count}} opțiuni",
     "MAX_REACHED": "MAXIM ATINS",
     "SELECTIONS_USED": "{{current}}/{{max}} selecții utilizate",
@@ -123,14 +129,22 @@
     "ALREADY_SUBMITTED_TITLE": "Deja trimis",
     "ALREADY_SUBMITTED_SUBTITLE": "Ai trimis deja răspunsul pentru acest sondaj.",
     "SUCCESS_PAGE_TITLE": "Răspunsurile tale au fost înregistrate",
-    "SUCCESS_PAGE_SUBTITLE": "Mulțumim pentru participare! Poți închide această fereastră."
+    "SUCCESS_PAGE_SUBTITLE": "Mulțumim pentru participare! Poți închide această fereastră.",
+    "CLOSED_AT": "închis",
+    "INVITED": "invitați",
+    "INVITATIONS_NOT_SENT_YET": "Invitațiile nu pot fi trimise încă",
+    "CLOSED_SUCCESS": "Sondajul a fost închis"
   },
   "CONTACTS": {
+    "INVALID_FORMAT": "Format invalid",
+    "ROW": "Rând",
+    "MAX_ROWS": "Max. 10.000 rânduri",
+    "OPTIONAL_NAME": "nume opțional",
     "NEW_LIST": "Listă nouă",
     "EMPTY_TITLE": "Nu ai nicio listă de contacte",
     "EMPTY_DESCRIPTION": "Creează prima ta listă pentru a putea trimite invitații către participanți.",
-    "VIEW": "Vezi",
-    "IMPORT_CSV": "Import CSV",
+    "VIEW": "Vizualizează",
+    "IMPORT_CSV": "Importă CSV",
     "CSV": "CSV",
     "CONTACTS_COUNT": "{{count}} contacte",
     "CREATED_AT": "creat la {{date}}",
@@ -213,31 +227,82 @@
   },
   "RESULTS": {
     "PAGE_TITLE": "Rezultate",
-    "EXPORT_CSV": "Exportă CSV",
+    "DATE_REALTIME": "Date actualizate în timp real",
+    "EXPORT_CSV": "Export CSV",
     "LOADING": "Se încarcă rezultatele...",
+    "FUNNEL": {
+      "TITLE": "FUNNEL INVITAȚII → SUBMIT",
+      "INVITED": "Invitați",
+      "SENT": "Trimiși",
+      "EMAIL_OPEN": "Email Deschis",
+      "SURVEY_OPEN": "Sondaj Deschis",
+      "SUBMITTED": "Finalizări",
+      "BOUNCE": "Bounce",
+      "COMPLETION_RATE": "Rată finalizare (sondaj deschis → submit)"
+    },
     "TABS": {
       "QUESTIONS": "Întrebări",
       "COMMENTS": "Comentarii"
     },
-    "FUNNEL": {
-      "INVITED": "Invitați",
-      "SENT": "Trimiși",
-      "EMAIL_OPEN": "Email Open",
-      "SURVEY_OPEN": "Survey Open",
-      "SUBMITTED": "Submituri"
+    "CARD": {
+      "TYPE_CHOICE": "multi-choice",
+      "TYPE_TEXT": "text liber",
+      "MAX_SELECTIONS": "max {{count}}",
+      "MAX_CHARACTERS": "max {{count}} caractere",
+      "RESPONSES_INFO": "{{count}} răspunsuri din {{total}}",
+      "MULTI_CHOICE_HINT": "La întrebările multi-choice, suma procentelor poate depăși 100%. Procentele sunt calculate din numărul de respondenți la această întrebare ({{count}}).",
+      "VIEW_COMMENTS": "Vezi toate comentariile"
     },
     "COMMENTS_SECTION": {
-      "SEARCH_PLACEHOLDER": "Caută în comentarii sau email...",
+      "SEARCH_PLACEHOLDER": "Caută în comentarii...",
       "SELECT_QUESTION": "Selectează întrebarea",
-      "RESPONSES_COUNT": "răspunsuri",
-      "EMPTY": "Niciun rezultat pentru căutarea curentă.",
-      "ANONYMOUS": "Anonim"
+      "RESPONSES_COUNT": "RĂSPUNSURI",
+      "PAGE_INFO": "pagina {{current}} din {{total}}",
+      "EMPTY": "Nu există rezultate pentru căutarea curentă.",
+      "ANONYMOUS": "Anonim",
+      "PREV": "Prev",
+      "NEXT": "Next"
+    }
+  },
+  "INVITATIONS": {
+    "TITLE": "Invitații",
+    "SLUG": "slug",
+    "SUCCESS_SEND": "{{count}} invitații au fost trimise cu succes",
+    "PREVIEW_MSG": "{{new}} emailuri noi vor fi trimise · {{skipped}} contacte au primit deja invitația (skip)",
+    "COMMON": {
+      "LOADING": "Se încarcă...",
+      "CONTACTS": "contacte",
+      "PREVIEW": "Preview",
+      "SENDING": "Se trimite..."
     },
-    "CARD": {
-      "MULTI_CHOICE_HINT": "La multi-choice suma procentelor poate depăși 100%.",
-      "TYPE_CHOICE": "multi-choice",
-      "TYPE_TEXT": "text-liber",
-      "VIEW_COMMENTS": "Vezi toate comentariile"
+    "STATUS": {
+      "PUBLISHED": "publicat",
+      "DRAFT": "draft"
+    },
+    "ERRORS": {
+      "FETCH": "Eroare la preluarea datelor",
+      "PREVIEW": "Eroare la generarea preview-ului",
+      "SEND": "Eroare la trimiterea invitațiilor",
+      "NOT_FOUND": "Sondajul nu a fost găsit"
+    },
+    "SEND_SECTION": {
+      "TITLE": "Trimite invitații",
+      "SUBTITLE": "Selectează listă de contacte",
+      "CHOOSE_LIST": "Alege Listă de contacte",
+      "PREVIEW_BTN": "Preview trimitere",
+      "CONFIRM_BTN": "Trimite {{count}} invitații"
+    },
+    "LOG_SECTION": {
+      "TITLE": "Invitații trimise",
+      "SEARCH_PLACEHOLDER": "Caută după email...",
+      "EMPTY": "Nu există invitații trimise pentru acest sondaj."
+    },
+    "TABLE": {
+      "EMAIL": "Email",
+      "EMAIL_OPEN": "Email Deschis",
+      "SURVEY_OPEN": "Sondaj Deschis",
+      "STATUS": "Status",
+      "DATE": "Data"
     }
   }
 }

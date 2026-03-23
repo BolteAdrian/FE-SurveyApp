@@ -27,7 +27,9 @@ export interface ISurvey {
 export interface ISurveyWithCount extends ISurvey {
   _count: {
     questions: number;
+    invitations: number;
   };
+  submittedCount: number;
 }
 
 export interface IQuestion {

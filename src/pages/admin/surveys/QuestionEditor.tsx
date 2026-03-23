@@ -9,6 +9,7 @@ import { adminApi } from "../../../api/adminApi";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { Check, Trash2 } from "lucide-react";
 
 type QuestionEditorProps = {
   surveyId?: string;
@@ -66,7 +67,6 @@ export default function QuestionEditor({
         question?.id && !question.id.toString().includes("temp");
 
       if (surveyId && isRealQuestion) {
-
         const saved = await adminApi.updateQuestion(
           surveyId,
           question.id as string,
@@ -91,7 +91,7 @@ export default function QuestionEditor({
         } else {
           const tempQuestion: IQuestion = {
             ...payload,
-            id: `temp-${Date.now()}`,// temporary id
+            id: `temp-${Date.now()}`, // temporary id
           };
           setQuestions((prev) => [...prev, tempQuestion]);
         }
@@ -109,7 +109,6 @@ export default function QuestionEditor({
         {/* HEADER */}
         <div className="bg-[#111114] p-3 border-b border-gray-800 flex items-center gap-2">
           <span className="text-[10px] font-mono text-gray-600 ml-4 uppercase tracking-widest">
-            {t("SURVEY.MODAL")} —{" "}
             {question ? t("SURVEY.EDIT_QUESTION") : t("SURVEY.NEW_QUESTION")}
           </span>
         </div>
@@ -136,73 +135,113 @@ export default function QuestionEditor({
           </div>
 
           {/* TITLE */}
-          <input
-            className="w-full bg-[#1A1A22] border border-gray-800 p-4 rounded-xl text-white"
-            placeholder={t("SURVEY.QUESTION_TEXT_PLACEHOLDER")}
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-
-          {/* REQUIRED */}
-          <label className="flex gap-2 text-sm text-gray-400">
+          <div className="space-y-1.5">
+            <label className="block text-xs text-gray-500 font-mono uppercase tracking-wider">
+              {t("SURVEY.QUESTION_TEXT_PLACEHOLDER")} *
+            </label>
             <input
-              type="checkbox"
-              checked={required}
-              onChange={(e) => setRequired(e.target.checked)}
+              className="w-full bg-[#1A1A22] border border-gray-800 p-4 rounded-xl text-white outline-none focus:border-blue-500 transition-all placeholder:text-gray-700"
+              placeholder={t("SURVEY.QUESTION_TEXT_PLACEHOLDER")}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
             />
-            {t("SURVEY.REQUIRED")}
-          </label>
+          </div>
 
-          {/* OPTIONS */}
-          {type === "CHOICE" && (
-            <div className="space-y-3">
-              {options.map((opt, i) => (
-                <div key={i} className="flex gap-2">
-                  <input
-                    className="flex-1 bg-[#1A1A22] border border-gray-800 p-3 rounded-xl"
-                    value={opt}
-                    onChange={(e) => {
-                      const updated = [...options];
-                      updated[i] = e.target.value;
-                      setOptions(updated);
-                    }}
-                  />
-                  <button
-                    onClick={() =>
-                      setOptions(options.filter((_, idx) => idx !== i))
-                    }
-                  >
-                    🗑
-                  </button>
+          {/* REQUIRED CHECKBOX */}
+          <div className="flex items-center gap-3 py-2">
+            <label className="relative flex items-center cursor-pointer group">
+              <input
+                type="checkbox"
+                className="sr-only"
+                checked={required}
+                onChange={(e) => setRequired(e.target.checked)}
+              />
+              <div
+                className={`w-5 h-5 rounded border transition-all flex items-center justify-center ${
+                  required
+                    ? "bg-[#55d6a0] border-[#55d6a0]"
+                    : "bg-[#1A1A22] border-gray-700 group-hover:border-gray-500"
+                }`}
+              >
+                {required && (
+                  <Check size={14} className="text-[#111114] stroke-[3px]" />
+                )}
+              </div>
+              <span className="ml-3 text-sm font-medium text-gray-400 group-hover:text-gray-300 transition-colors">
+                {t("SURVEY.REQUIRED")}
+              </span>
+            </label>
+          </div>
+
+          {/* OPTIONS SECTION */}
+          {type === QuestionType.CHOICE && (
+            <div className="space-y-4">
+              <div className="flex flex-col gap-1.5">
+                <label className="text-xs text-gray-500 font-mono uppercase tracking-wider">
+                  {t("SURVEY.OPTIONS")} ({t("SURVEY.MIN_TWO")})
+                </label>
+
+                <div className="space-y-3">
+                  {options.map((opt, i) => (
+                    <div key={i} className="flex gap-2 group">
+                      <input
+                        className="flex-1 bg-[#1A1A22] border border-gray-800 p-3 rounded-xl"
+                        value={opt}
+                        onChange={(e) => {
+                          const updated = [...options];
+                          updated[i] = e.target.value;
+                          setOptions(updated);
+                        }}
+                        placeholder={`${t("SURVEY.OPTION")} ${i + 1}`}
+                      />
+                      <button
+                        onClick={() =>
+                          setOptions(options.filter((_, idx) => idx !== i))
+                        }
+                        className="p-3 bg-[#1A1A22] border border-gray-800 text-gray-500 rounded-xl hover:text-red-500 hover:border-red-500/50 transition-all"
+                        title={t("SURVEY.DELETE_OPTION")}
+                      >
+                        <Trash2 size={18} />
+                      </button>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
+
+              {/* ADD OPTION BUTTON */}
               <button
+                type="button"
                 onClick={() => setOptions((prev) => [...prev, ""])}
-                className="text-xs text-gray-500"
+                className="mt-2 px-4 py-2 bg-[#1A1A22] border border-gray-800 rounded-lg text-[11px] font-mono text-gray-400 hover:text-white hover:border-gray-600 transition-all flex items-center justify-center w-fit"
               >
                 + {t("SURVEY.ADD_OPTION")}
               </button>
             </div>
           )}
 
-          {/* LIMITS */}
-          {type === "CHOICE" ? (
-            <input
-              type="number"
-              value={maxSelections}
-              onChange={(e) => setMaxSelections(Number(e.target.value))}
-              className="w-full bg-[#1A1A22] border border-gray-800 p-3 rounded-xl"
-              placeholder={t("SURVEY.MAX_SELECTIONS_INPUT")}
-            />
-          ) : (
-            <input
-              type="number"
-              value={maxLength}
-              onChange={(e) => setMaxLength(Number(e.target.value))}
-              className="w-full bg-[#1A1A22] border border-gray-800 p-3 rounded-xl"
-              placeholder={t("SURVEY.MAX_LENGTH_INPUT")}
-            />
-          )}
+          {/* LIMITS (Max Selections / Max Length) */}
+          <div className="space-y-1.5">
+            <label className="block text-xs text-gray-500 font-mono uppercase tracking-wider">
+              {type === QuestionType.CHOICE
+                ? t("SURVEY.MAX_SELECTIONS_INPUT")
+                : t("SURVEY.MAX_LENGTH_INPUT")}
+            </label>
+            {type === QuestionType.CHOICE ? (
+              <input
+                type="number"
+                value={maxSelections}
+                onChange={(e) => setMaxSelections(Number(e.target.value))}
+                className="w-full bg-[#1A1A22] border border-gray-800 p-3 rounded-xl text-white outline-none focus:border-blue-500 transition-all"
+              />
+            ) : (
+              <input
+                type="number"
+                value={maxLength}
+                onChange={(e) => setMaxLength(Number(e.target.value))}
+                className="w-full bg-[#1A1A22] border border-gray-800 p-3 rounded-xl text-white outline-none focus:border-blue-500 transition-all"
+              />
+            )}
+          </div>
 
           {/* ACTIONS */}
           <div className="flex justify-end gap-3 pt-6">

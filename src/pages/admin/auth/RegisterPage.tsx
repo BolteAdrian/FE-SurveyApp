@@ -33,7 +33,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-[#111114] text-[#e8e6e1] px-4">
+    <div className="flex items-center justify-center min-h-screen text-[#e8e6e1] px-4">
       {/* Language switcher (top right) */}
       <div className="absolute top-6 right-6">
         <LanguageSwitcher />
@@ -58,7 +58,7 @@ export default function RegisterPage() {
         <div className="space-y-4">
           {/* Name input */}
           <input
-            className="input-dark w-full px-4 py-3 bg-[#111114] border border-white/10 rounded-lg focus:border-blue-500 focus:outline-none transition-all"
+            className="input-dark w-full px-4 py-3 mb-0 border border-white/100 rounded-lg focus:border-blue-500 focus:outline-none transition-all"
             placeholder={t("AUTH.NAME")}
             type="text"
             value={name}
@@ -67,7 +67,7 @@ export default function RegisterPage() {
 
           {/* Email input */}
           <input
-            className="input-dark w-full px-4 py-3 bg-[#111114] border border-white/10 rounded-lg focus:border-blue-500 focus:outline-none transition-all"
+            className="input-dark w-full px-4 py-3 border border-white/10 rounded-lg focus:border-blue-500 focus:outline-none transition-all"
             placeholder={t("AUTH.EMAIL")}
             type="email"
             value={email}
@@ -76,7 +76,7 @@ export default function RegisterPage() {
 
           {/* Password input */}
           <input
-            className="input-dark w-full px-4 py-3 bg-[#111114] border border-white/10 rounded-lg focus:border-blue-500 focus:outline-none transition-all"
+            className="input-dark w-full px-4 py-3 border border-white/10 rounded-lg focus:border-blue-500 focus:outline-none transition-all"
             type="password"
             placeholder={t("AUTH.PASSWORD")}
             value={password}

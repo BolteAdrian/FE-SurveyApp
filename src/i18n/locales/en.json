@@ -4,6 +4,12 @@
     "CONTACTS": "Contact lists"
   },
   "SURVEY": {
+    "SELECTIONS": "selections",
+    "CHARACTERS": "characters",
+    "NO_TITLE": "No title",
+    "MIN_TWO": "min 2",
+    "OPTION": "Option",
+    "ACTIONS": "Actions",
     "MAX_OPTIONS": "Select {{count}} options",
     "MAX_REACHED": "MAX REACHED",
     "SELECTIONS_USED": "{{current}}/{{max}} selections used",
@@ -123,9 +129,17 @@
     "ALREADY_SUBMITTED_TITLE": "Already submitted",
     "ALREADY_SUBMITTED_SUBTITLE": "You have already sent your response for this survey.",
     "SUCCESS_PAGE_TITLE": "Your responses have been recorded",
-    "SUCCESS_PAGE_SUBTITLE": "Thank you for participating! You can close this window."
+    "SUCCESS_PAGE_SUBTITLE": "Thank you for participating! You can close this window.",
+    "CLOSED_AT": "closed",
+    "INVITED": "invited",
+    "INVITATIONS_NOT_SENT_YET": "Invitations cannot be sent yet",
+    "CLOSED_SUCCESS": "Survey closed successfully"
   },
   "CONTACTS": {
+    "INVALID_FORMAT": "Invalid format",
+    "ROW": "Row",
+    "MAX_ROWS": "Max. 10,000 rows",
+    "OPTIONAL_NAME": "optional Name",
     "NEW_LIST": "New List",
     "EMPTY_TITLE": "You don't have any contact lists",
     "EMPTY_DESCRIPTION": "Create your first list to start sending invitations to participants.",
@@ -213,31 +227,82 @@
   },
   "RESULTS": {
     "PAGE_TITLE": "Results",
+    "DATE_REALTIME": "Data updated in real time",
     "EXPORT_CSV": "Export CSV",
     "LOADING": "Loading results...",
-    "TABS": {
-      "QUESTIONS": "Questions",
-      "COMMENTS": "Comments"
-    },
     "FUNNEL": {
+      "TITLE": "FUNNEL INVITED → SUBMIT",
       "INVITED": "Invited",
       "SENT": "Sent",
       "EMAIL_OPEN": "Email Open",
       "SURVEY_OPEN": "Survey Open",
-      "SUBMITTED": "Submissions"
+      "SUBMITTED": "Submissions",
+      "BOUNCE": "Bounce",
+      "COMPLETION_RATE": "Completion rate (survey open → submit)"
+    },
+    "TABS": {
+      "QUESTIONS": "Questions",
+      "COMMENTS": "Comments"
+    },
+    "CARD": {
+      "TYPE_CHOICE": "multi-choice",
+      "TYPE_TEXT": "free text",
+      "MAX_SELECTIONS": "max {{count}}",
+      "MAX_CHARACTERS": "max {{count}} characters",
+      "RESPONSES_INFO": "{{count}} responses out of {{total}}",
+      "MULTI_CHOICE_HINT": "For multi-choice questions, percentages may exceed 100%. Percentages are calculated from the number of respondents to this question ({{count}}).",
+      "VIEW_COMMENTS": "View all comments"
     },
     "COMMENTS_SECTION": {
       "SEARCH_PLACEHOLDER": "Search in comments or email...",
       "SELECT_QUESTION": "Select question",
-      "RESPONSES_COUNT": "responses",
       "EMPTY": "No results for the current search.",
-      "ANONYMOUS": "Anonymous"
+      "ANONYMOUS": "Anonymous",
+      "PAGE_INFO": "page {{current}} of {{total}}",
+      "PREV": "Prev",
+      "NEXT": "Next",
+      "RESPONSES_COUNT": "RESPONSES"
+    }
+  },
+  "INVITATIONS": {
+    "TITLE": "Invitations",
+    "SLUG": "slug",
+    "SUCCESS_SEND": "{{count}} invitations sent successfully",
+    "PREVIEW_MSG": "{{new}} new emails will be sent · {{skipped}} contacts already received the invitation (skipped)",
+    "COMMON": {
+      "LOADING": "Loading...",
+      "CONTACTS": "contacts",
+      "PREVIEW": "Preview",
+      "SENDING": "Sending..."
     },
-    "CARD": {
-      "MULTI_CHOICE_HINT": "For multi-choice questions, percentages may exceed 100%.",
-      "TYPE_CHOICE": "multi-choice",
-      "TYPE_TEXT": "free text",
-      "VIEW_COMMENTS": "View all comments"
+    "STATUS": {
+      "PUBLISHED": "published",
+      "DRAFT": "draft"
+    },
+    "ERRORS": {
+      "FETCH": "Error fetching data",
+      "PREVIEW": "Error generating preview",
+      "SEND": "Error sending invitations",
+      "NOT_FOUND": "Survey not found"
+    },
+    "SEND_SECTION": {
+      "TITLE": "Send invitations",
+      "SUBTITLE": "Select contact list",
+      "CHOOSE_LIST": "Choose contact list",
+      "PREVIEW_BTN": "Preview sending",
+      "CONFIRM_BTN": "Send {{count}} invitations"
+    },
+    "LOG_SECTION": {
+      "TITLE": "Sent invitations",
+      "SEARCH_PLACEHOLDER": "Search by email...",
+      "EMPTY": "No invitations sent for this survey."
+    },
+    "TABLE": {
+      "EMAIL": "Email",
+      "EMAIL_OPEN": "Email Opened",
+      "SURVEY_OPEN": "Survey Opened",
+      "STATUS": "Status",
+      "DATE": "Date"
     }
   }
 }
