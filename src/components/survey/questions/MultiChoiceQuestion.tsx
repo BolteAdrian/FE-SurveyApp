@@ -1,4 +1,4 @@
-import type { QuestionsProps, IOption } from "../../types/survey";
+import type { IOption, QuestionsProps } from "../../../types/survey";
 
 export default function MultiChoiceQuestion({
   question,

@@ -2,39 +2,39 @@ import { type IQuestion, type IAnswer, QuestionType } from "../types/survey";
 
 export function validateAnswers(
   questions: IQuestion[],
-  answers: IAnswer[]
+  answers: IAnswer[],
+  t: (key: string, options?: any) => string,
 ) {
   const errors: Record<string, string> = {};
 
   for (const q of questions) {
-    if (!q.id) continue;
-
-    const answer = answers.find((a) => a.questionId === q.id);
+    const questionAnswers = answers.filter((a) => a.questionId === q.id);
 
     if (q.type === QuestionType.CHOICE) {
-      const selected = answer && 'optionId' in answer ? answer.optionId : '';
-
-      if (!selected?.length) {
-        errors[q.id] = 'Please select at least one option';
+      if (q.required && questionAnswers.length === 0) {
+        errors[q.id as string] = t("VALIDATION.REQUIRED_CHOICE");
       }
 
-      if (
-        q.maxSelections && 
-        selected.length > q.maxSelections
-      ) {
-        errors[q.id] = `Max ${q.maxSelections} selections`;
+      if (q.maxSelections && questionAnswers.length > q.maxSelections) {
+        errors[q.id as string] = t("VALIDATION.MAX_SELECTIONS", {
+          count: q.maxSelections,
+        });
       }
     }
 
     if (q.type === QuestionType.TEXT) {
-      const text = answer && 'textValue' in answer ? answer.textValue : '';
+      const answer = questionAnswers[0];
 
-      if (!text.trim()) {
-        errors[q.id] = 'Required field';
+      const textVal = answer && "textValue" in answer ? answer.textValue : "";
+
+      if (q.required && (!textVal || textVal.trim() === "")) {
+        errors[q.id as string] = t("VALIDATION.REQUIRED_FIELD");
       }
 
-      if (q.maxLength && text.length > q.maxLength) {
-        errors[q.id] = `Max ${q.maxLength} chars`;
+      if (q.maxLength && textVal.length > q.maxLength) {
+        errors[q.id as string] = t("VALIDATION.MAX_LENGTH", {
+          count: q.maxLength,
+        });
       }
     }
   }

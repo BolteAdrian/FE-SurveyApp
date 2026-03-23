@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SurveyPage from "./pages/public/SurveyPage";
-import LandingPage from "./pages/public/LandingPage";
 import AdminLayout from "./layouts/AdminLayout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicLayout from "./layouts/PublicLayout";
@@ -16,6 +15,8 @@ import ListsPage from "./pages/admin/lists/ListsPage";
 import ListDetailsPage from "./pages/admin/lists/ListPage";
 import InvitationPage from "./pages/admin/surveys/InvitationPage";
 import { ToastContainer } from "react-toastify";
+import InvalidLink from "./pages/public/InvalidLink";
+import SurveySuccess from "./pages/public/ConfirmedSubmitted";
 
 function App() {
   return (
@@ -25,10 +26,11 @@ function App() {
         <Routes>
           {/* PUBLIC */}
           <Route element={<PublicLayout />}>
-            <Route path="/" element={<LandingPage />} />
+            <Route path="/" element={<InvalidLink />} />
             <Route path="/s/:slug" element={<SurveyPage />} />
             <Route path="/closed" element={<SurveyClosed />} />
-            <Route path="/submitted" element={<AlreadySubmitted />} />
+            <Route path="/already-submitted" element={<AlreadySubmitted />} />
+            <Route path="/submitted" element={<SurveySuccess />} />
           </Route>
 
           {/* ADMIN */}

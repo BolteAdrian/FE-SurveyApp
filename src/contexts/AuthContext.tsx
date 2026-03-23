@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
-import type { IUser } from "../types/survey";
+import type { IUser } from "../types/user";
 
 interface AuthContextType {
   isAuthenticated: boolean;

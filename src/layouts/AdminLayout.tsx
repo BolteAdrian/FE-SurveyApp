@@ -3,7 +3,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { useState } from "react";
 import LanguageSwitcher from "../components/LanguageSwitcher";
 import { useTranslation } from "react-i18next";
-import CreateListModal from "../components/contacts/CreateLostModal";
+import CreateListModal from "../components/contacts/CreateListModal";
 import {
   Menu,
   X,

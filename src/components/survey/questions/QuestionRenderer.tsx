@@ -1,6 +1,6 @@
-import { QuestionType, type QuestionsProps } from '../../types/survey';
-import MultiChoiceQuestion from './MultiChoiceQuestion';
-import TextQuestion from './TextQuestion';
+import { QuestionType, type QuestionsProps } from "../../../types/survey";
+import MultiChoiceQuestion from "./MultiChoiceQuestion";
+import TextQuestion from "./TextQuestion";
 
 export default function QuestionRenderer({ question, ...props }: QuestionsProps) {
   switch (question.type) {

@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 import { Trash2, GripVertical, Edit2 } from "lucide-react";
 import { adminApi } from "../../../api/adminApi";
 import { toast } from "react-toastify";
+import { ConfirmModal } from "../../../components/ConfirmModal";
 
 export default function SurveyEditor() {
   const { t } = useTranslation();
@@ -23,6 +24,11 @@ export default function SurveyEditor() {
   const [editingQuestion, setEditingQuestion] = useState<IQuestion | null>(
     null,
   );
+  const [confirmOpen, setConfirmOpen] = useState<boolean>(false);
+  const [questionToDelete, setQuestionToDelete] = useState<{
+    id: string;
+    index: number;
+  } | null>(null);
 
   const {
     title,
@@ -83,6 +89,24 @@ export default function SurveyEditor() {
           }
         : { type, title: "", required: false, order: questions.length };
     setEditingQuestion(newQuestion);
+  };
+
+  const handleDeleteClick = (id: string, index: number) => {
+    setQuestionToDelete({ id, index });
+    setConfirmOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (questionToDelete) {
+      deleteQuestion(questionToDelete.id, questionToDelete.index);
+      setQuestionToDelete(null);
+      setConfirmOpen(false);
+    }
+  };
+
+  const handleCancelDelete = () => {
+    setQuestionToDelete(null);
+    setConfirmOpen(false);
   };
 
   return (
@@ -210,7 +234,7 @@ export default function SurveyEditor() {
                                   <Edit2 size={16} />
                                 </button>
                                 <button
-                                  onClick={() => deleteQuestion(q.id, index)}
+                                 onClick={() => handleDeleteClick(q.id as string, index)} 
                                   className="p-2 bg-[#111114] border border-gray-800 text-gray-500 rounded-lg hover:text-red-500 transition-all"
                                 >
                                   <Trash2 size={16} />
@@ -278,6 +302,15 @@ export default function SurveyEditor() {
           onClose={() => setEditingQuestion(null)}
         />
       )}
+
+      {/* Confirm Modal */}
+      <ConfirmModal
+        isOpen={confirmOpen}
+        title={t("SURVEY.CONFIRM_DELETE_QUESTION")}
+        message={t("SURVEY.ARE_YOU_SURE_DELETE")}
+        onConfirm={handleConfirmDelete}
+        onCancel={handleCancelDelete}
+      />
     </div>
   );
 }

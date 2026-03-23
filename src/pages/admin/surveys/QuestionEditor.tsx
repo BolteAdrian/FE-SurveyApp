@@ -108,11 +108,6 @@ export default function QuestionEditor({
       <div className="w-full max-w-2xl bg-[#1e1e24] border border-gray-800 rounded-2xl overflow-hidden shadow-2xl m-4">
         {/* HEADER */}
         <div className="bg-[#111114] p-3 border-b border-gray-800 flex items-center gap-2">
-          <div className="flex gap-1.5 ml-2">
-            <div className="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
-            <div className="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
-            <div className="w-3 h-3 rounded-full bg-[#27c93f]"></div>
-          </div>
           <span className="text-[10px] font-mono text-gray-600 ml-4 uppercase tracking-widest">
             {t("SURVEY.MODAL")} —{" "}
             {question ? t("SURVEY.EDIT_QUESTION") : t("SURVEY.NEW_QUESTION")}

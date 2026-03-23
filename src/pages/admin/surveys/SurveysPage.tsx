@@ -5,6 +5,7 @@ import { type ISurveyWithCount, SurveyStatus } from "../../../types/survey";
 import { useTranslation } from "react-i18next";
 import { ConfirmModal } from "../../../components/ConfirmModal";
 import { toast } from "react-toastify";
+import { Mail } from "lucide-react";
 
 export default function SurveysPage() {
   const { t } = useTranslation();
@@ -232,14 +233,14 @@ export default function SurveysPage() {
               <button
                 onClick={() =>
                   navigate(
-                    s.status === SurveyStatus.PUBLISHED
+                    s.status !== SurveyStatus.DRAFT
                       ? `/admin/surveys/${s.id}/results`
                       : `/admin/surveys/${s.id}`,
                   )
                 }
                 className="flex-1 md:flex-none px-4 py-2 bg-[#1A1A22] border border-gray-700 text-gray-400 rounded-lg text-xs hover:text-white hover:border-gray-500 transition-all text-center"
               >
-                {s.status === SurveyStatus.PUBLISHED
+                {s.status !== SurveyStatus.DRAFT
                   ? t("SURVEY.RESULTS")
                   : t("SURVEY.EDIT")}
               </button>
@@ -262,12 +263,23 @@ export default function SurveysPage() {
               )}
 
               {s.status === SurveyStatus.PUBLISHED && (
-                <button
-                  onClick={() => openModal("CLOSE", s.id as string)}
-                  className="flex-1 md:flex-none px-4 py-2 bg-[#1A1A22] border border-red-500/40 text-red-400 rounded-lg text-xs hover:bg-red-500/10 transition-all font-bold text-center"
-                >
-                  {t("SURVEY.CLOSE")}
-                </button>
+                <>
+                  <button
+                    onClick={() =>
+                      navigate(`/admin/surveys/${s.id}/invitations`)
+                    }
+                    className="flex-1 md:flex-none px-4 py-2 bg-[#1A1A22] border border-blue-500/40 text-blue-400 rounded-lg text-xs hover:bg-blue-500/10 transition-all font-bold text-center flex items-center justify-center gap-2"
+                  >
+                    <Mail size={14} />
+                    {t("SURVEY.MANAGE_INVITATIONS")}
+                  </button>
+                  <button
+                    onClick={() => openModal("CLOSE", s.id as string)}
+                    className="flex-1 md:flex-none px-4 py-2 bg-[#1A1A22] border border-red-500/40 text-red-400 rounded-lg text-xs hover:bg-red-500/10 transition-all font-bold text-center"
+                  >
+                    {t("SURVEY.CLOSE")}
+                  </button>
+                </>
               )}
             </div>
           </div>

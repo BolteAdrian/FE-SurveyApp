@@ -1,3 +1,5 @@
+import type { IInvitation } from "./invitation";
+
 export const SurveyStatus = {
   DRAFT: "DRAFT",
   PUBLISHED: "PUBLISHED",
@@ -48,15 +50,9 @@ export interface IOption {
   label: string;
 }
 
-export interface Invitation {
-  id: string;
-  email: string;
-  submittedAt: string | null;
-}
-
 export interface SurveyResponse {
   survey: ISurvey;
-  invitation: Invitation;
+  invitation: IInvitation;
 }
 
 /**
@@ -76,10 +72,4 @@ export interface QuestionsProps {
   question: IQuestion;
   answers: IAnswer[];
   setAnswers: (answers: IAnswer[]) => void;
-}
-
-export interface IUser {
-  id: string;
-  name: string;
-  email: string;
 }

@@ -1,4 +1,4 @@
-import type { IAnswer, QuestionsProps } from "../../types/survey";
+import type { QuestionsProps, IAnswer } from "../../../types/survey";
 
 export default function TextQuestion({
   question,
