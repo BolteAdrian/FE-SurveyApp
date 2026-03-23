@@ -41,10 +41,13 @@ export default function ListDetailsPage() {
     try {
       const newContact = await adminApi.addContactToList(id, { email, name });
 
-      setList((prev: any) => ({
-        ...prev,
-        emailContacts: [newContact, ...(prev?.emailContacts || [])],
-      }));
+      setList((prev) => {
+        if (!prev) return null;
+        return {
+          ...prev,
+          emailContacts: [newContact, ...(prev.emailContacts || [])],
+        };
+      });
 
       setEmail("");
       setName("");

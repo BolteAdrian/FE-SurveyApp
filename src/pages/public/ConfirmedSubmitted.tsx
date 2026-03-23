@@ -6,7 +6,6 @@ const SurveySuccess = () => {
 
   return (
     <div className="relative min-h-screen bg-[#121214] flex flex-col items-center justify-center p-6 text-center">
-      {/* Language Switcher - Poziționat absolut în colț */}
       <div className="absolute top-4 right-4 md:top-8 md:right-8">
         <LanguageSwitcher />
       </div>

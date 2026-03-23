@@ -4,6 +4,9 @@
     "CONTACTS": "Liste contacte"
   },
   "SURVEY": {
+    "MAX_OPTIONS": "Selectează maxim {{count}} opțiuni",
+    "MAX_REACHED": "MAXIM ATINS",
+    "SELECTIONS_USED": "{{current}}/{{max}} selecții utilizate",
     "SELECT_LIST": "Alege Listă de contacte",
     "NEW_INVITATIONS": "invitații noi",
     "CONTACTS": "Contacte",

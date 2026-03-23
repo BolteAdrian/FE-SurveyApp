@@ -62,7 +62,7 @@ export default function AdminLayout() {
             </button>
 
             <h2 className="text-[#e9c46a] text-xl font-serif tracking-tight font-bold">
-              SurveyApp
+              Survey App
             </h2>
 
             <nav className="hidden lg:flex items-center gap-1 ml-4">

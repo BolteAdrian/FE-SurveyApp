@@ -1,13 +1,13 @@
 import { useTranslation } from "react-i18next";
 import { adminApi } from "../../../api/adminApi";
+import type { ISurveyStats } from "../../../types/survey";
 
-export function FunnelHeader({
-  summary,
-  surveyId,
-}: {
-  summary: any;
+interface FunnelHeaderProps {
+  summary: ISurveyStats;
   surveyId: string;
-}) {
+}
+
+export function FunnelHeader({ summary, surveyId }: FunnelHeaderProps) {
   const { t } = useTranslation();
 
   const getPercent = (v: number, total: number) =>

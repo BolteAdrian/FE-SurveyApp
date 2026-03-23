@@ -4,6 +4,9 @@
     "CONTACTS": "Contact lists"
   },
   "SURVEY": {
+    "MAX_OPTIONS": "Select {{count}} options",
+    "MAX_REACHED": "MAX REACHED",
+    "SELECTIONS_USED": "{{current}}/{{max}} selections used",
     "SELECT_LIST": "Select Contact List",
     "NEW_INVITATIONS": "new invitations",
     "CONTACTS": "Contacts",

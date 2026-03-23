@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import type { IOption, QuestionsProps } from "../../../types/survey";
 
 export default function MultiChoiceQuestion({
@@ -5,7 +6,8 @@ export default function MultiChoiceQuestion({
   answers,
   setAnswers,
 }: QuestionsProps) {
-  // These are the answers for this specific question
+  const { t } = useTranslation();
+
   const questionAnswers = answers.filter(
     (a) => "optionId" in a && a.questionId === question.id,
   ) as { questionId: string; optionId: string }[];
@@ -56,7 +58,7 @@ export default function MultiChoiceQuestion({
         </h3>
         {max > 1 && (
           <p className="text-[10px] font-mono text-gray-600 uppercase tracking-widest">
-            Selectează maxim {max} opțiuni
+            {t("SURVEY.MAX_OPTIONS", { count: max })}
           </p>
         )}
       </div>
@@ -94,7 +96,7 @@ export default function MultiChoiceQuestion({
 
               {!isSelected && isMaxReached && (
                 <span className="text-[9px] font-mono text-[#e9c46a] tracking-tighter">
-                  MAXIM ATINS
+                  {t("SURVEY.MAX_REACHED")}
                 </span>
               )}
             </button>
@@ -104,7 +106,10 @@ export default function MultiChoiceQuestion({
 
       {max > 1 && (
         <p className="text-[11px] font-mono text-[#e9c46a]">
-          {selectedOptionIds.size}/{max} selecții utilizate
+          {t("SURVEY.SELECTIONS_USED", {
+            current: selectedOptionIds.size,
+            max: max,
+          })}
         </p>
       )}
     </div>

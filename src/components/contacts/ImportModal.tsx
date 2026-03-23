@@ -3,7 +3,17 @@ import Papa from "papaparse";
 import { adminApi } from "../../api/adminApi";
 import { useTranslation } from "react-i18next";
 
-export default function ImportModal({ listId, onClose, onSuccess }: any) {
+interface ImportModalrops {
+  listId: string | null;
+  onClose: () => void;
+  onSuccess: () => void;
+}
+
+export default function ImportModal({
+  listId,
+  onClose,
+  onSuccess,
+}: ImportModalrops) {
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { t } = useTranslation();
@@ -20,7 +30,7 @@ export default function ImportModal({ listId, onClose, onSuccess }: any) {
       skipEmptyLines: true,
       complete: async (results) => {
         try {
-          await adminApi.importContacts(listId, { contacts: results.data });
+          await adminApi.importContacts(listId!, { contacts: results.data });
           onSuccess();
           onClose();
         } catch (err) {

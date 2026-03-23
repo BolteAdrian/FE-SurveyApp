@@ -5,18 +5,17 @@ import { adminApi } from "../../../api/adminApi";
 import { QuestionResultCard } from "../../../components/survey/results/QuestionResultCard";
 import { FunnelHeader } from "../../../components/survey/results/FunnelHeader";
 import { CommentsView } from "../../../components/survey/results/CommentsView";
-import { QuestionType, type IQuestion } from "../../../types/survey";
+import { QuestionType, type IComment, type IQuestion, type IQuestionWithStats, type ISurveyStats } from "../../../types/survey";
 
 export default function ResultsPage() {
   const { id } = useParams<{ id: string }>();
   const { t } = useTranslation();
 
-  // State pentru datele principale
-  const [data, setData] = useState<{ summary: any; questions: any[] } | null>(
+  const [data, setData] = useState<{ summary: ISurveyStats; questions: IQuestionWithStats[] } | null>(
     null,
   );
   const [loading, setLoading] = useState<boolean>(true);
-  const [comments, setComments] = useState<any[]>([]);
+  const [comments, setComments] = useState<IComment[]>([]);
   const [commentsLoading, setCommentsLoading] = useState<boolean>(false);
 
   const [activeTab, setActiveTab] = useState<"questions" | "comments">(

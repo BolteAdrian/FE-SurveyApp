@@ -1,6 +1,17 @@
 import { useTranslation } from "react-i18next";
+import type { IQuestionWithStats } from "../../../types/survey";
 
-export function QuestionResultCard({ question, index, onGoToComments }: any) {
+interface QuestionResultCardProps {
+  question: IQuestionWithStats;
+  index: number;
+  onGoToComments: () => void;
+}
+
+export function QuestionResultCard({
+  question,
+  index,
+  onGoToComments,
+}: QuestionResultCardProps) {
   const { t } = useTranslation();
   const isChoice = !!question.stats;
 

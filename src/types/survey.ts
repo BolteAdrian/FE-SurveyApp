@@ -73,3 +73,32 @@ export interface QuestionsProps {
   answers: IAnswer[];
   setAnswers: (answers: IAnswer[]) => void;
 }
+
+export interface ISurveyStats {
+  invited: number;
+  sent: number;
+  emailOpened: number;
+  surveyOpened: number;
+  submitted: number;
+  bounced: number;
+  title: string;
+}
+
+export interface IComment {
+  id: string;
+  responseId: string;
+  questionId: string;
+  textValue: string | null;
+  optionId?: string | null;
+  question: IQuestion;
+}
+
+export interface IQuestionWithStats extends IQuestion {
+  stats: {
+    optionId: string;
+    label: string;
+    count: number;
+    percent: number;
+  }[];
+  totalAnswers: number;
+}

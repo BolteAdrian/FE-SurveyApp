@@ -3,13 +3,17 @@ import { adminApi } from "../../api/adminApi";
 import { useAuth } from "../../contexts/AuthContext";
 import { useTranslation } from "react-i18next";
 
-interface Props {
+interface CreateListModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSuccess: () => void;
 }
 
-export default function CreateListModal({ isOpen, onClose, onSuccess }: Props) {
+export default function CreateListModal({
+  isOpen,
+  onClose,
+  onSuccess,
+}: CreateListModalProps) {
   const [name, setName] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const { user } = useAuth();
@@ -32,7 +36,6 @@ export default function CreateListModal({ isOpen, onClose, onSuccess }: Props) {
       onClose();
     } catch (err) {
       console.error("Failed to create list:", err);
-      alert(t("CONTACTS.CREATE_ERROR"));
     } finally {
       setLoading(false);
     }
