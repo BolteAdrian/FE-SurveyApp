@@ -80,8 +80,8 @@ Administrators must authenticate to access the secure dashboard. The system supp
 
 | Task | Screenshot | Admin Route |
 | :--- | :--- | :--- |
-| **Login** | ![Admin Login](docs/screenshots/admin_login.png) | `/login-admin` |
-| **Registration** | ![Admin Register](docs/screenshots/admin_register.png) | `/register-admin` |
+| **Login** | <img width="1000" height="600" alt="Screenshot 2026-03-23 at 23 53 57" src="https://github.com/user-attachments/assets/0e559f9b-f30b-404f-b845-022b4de1246d" /> | `/login-admin` |
+| **Registration** | <img width="1000" height="600" alt="Screenshot 2026-03-24 at 00 02 33" src="https://github.com/user-attachments/assets/1629169b-d8f5-4121-85b1-b5b698039f1e" />| `/register-admin` |
 
 *The authentication portal features full i18n support (RO/EN) and secure credential handling.*
 
@@ -89,19 +89,31 @@ Administrators must authenticate to access the secure dashboard. The system supp
 Organize your respondents into specific lists for targeted outreach.
 
 * **Create Lists**: Generate separate lists for different departments, campaigns, or demographics.
+<img width="1000" height="500" alt="Screenshot 2026-03-24 at 00 23 20" src="https://github.com/user-attachments/assets/dab70473-3fad-4ed0-8a12-ad80fa483d8d" />
+
 * **Smart CSV Import**: Bulk upload thousands of contacts using CSV files containing `email` and `name` (optional) columns.
+<img width="984" height="714" alt="Screenshot 2026-03-24 at 00 23 32" src="https://github.com/user-attachments/assets/5aad6791-58b0-4741-8234-13e0dddb0b5f" />
+
 * **Manual Entry**: Easily add individual contacts to any list via an intuitive in-app form.
+<img width="1000" height="500" alt="Screenshot 2026-03-24 at 00 23 51" src="https://github.com/user-attachments/assets/e2b88657-2d29-4a6a-addf-1c6661afd222" />
+
 * **Validation**: The system automatically ignores duplicate emails and flags invalid addresses before import.
 
 #### 🏗️ C. Survey Creation & Building
 The dynamic builder allows for highly customizable survey structures.
 
+<img width="1000" height="500" alt="Screenshot 2026-03-24 at 00 04 18" src="https://github.com/user-attachments/assets/89fe517c-93ac-4eeb-9a84-0471e42cffb8" />
+
 * **Dynamic Editor**: Add or edit questions using specialized modals for `Multi-choice` or `Free Text`.
+<img width="1000" height="700" alt="Screenshot 2026-03-24 at 00 05 22" src="https://github.com/user-attachments/assets/72b68266-f123-47b4-9bfd-10e8a0fddcb0" />
+<img width="1000" height="700" alt="Screenshot 2026-03-24 at 00 05 45" src="https://github.com/user-attachments/assets/a94adddc-9c4a-4ecc-87e4-54f8a455d9e4" />
+  
 * **Live Slug Generation**: The survey's URL slug is automatically generated from the title but remains fully editable for SEO purposes.
 * **Drag & Drop**: Reorder questions instantly using a smooth drag-and-drop interface.
 
 #### 📧 D. Email Invitation Workflow
 Once a survey is **Published**, administrators can manage targeted email distributions.
+<img width="1000" height="800" alt="Screenshot 2026-03-24 at 00 24 18" src="https://github.com/user-attachments/assets/ca3556ef-a56b-4b0f-ae2b-f3894881eb43" />
 
 * **List Selection**: Choose a specific contact list to receive the survey.
 * **Smart Skip**: The system automatically previews and skips contacts who have already received an invitation to prevent spam.
@@ -114,7 +126,10 @@ Once a survey is **Published**, administrators can manage targeted email distrib
 The workflow for survey takers is optimized for high completion rates and requires no account.
 
 1.  **Email Invitation**: The respondent receives a professional HTML email invitation with a direct link to the survey.
-2.  **Survey Completion**: Upon clicking the link, the user is directed to a clean, focused survey form to provide their feedback.
+   <img width="1000" height="500" alt="Screenshot 2026-03-24 at 00 38 09" src="https://github.com/user-attachments/assets/cbe8d8f2-c898-4475-8cfe-a80617a07855" />
+
+3.  **Survey Completion**: Upon clicking the link, the user is directed to a clean, focused survey form to provide their feedback.
+<img width="531" height="826" alt="Screenshot 2026-03-24 at 00 44 49" src="https://github.com/user-attachments/assets/87e9eb22-41d7-4d6f-88bf-f1d577d48f2c" />
 
 ---
 
@@ -122,7 +137,8 @@ The workflow for survey takers is optimized for high completion rates and requir
 
 After data is collected, administrators can access a high-level statistical overview of the survey performance.
 
-![Detailed Results](docs/screenshots/results_detailed.png)
+<img width="1000" height="700" alt="Screenshot 2026-03-24 at 00 24 37" src="https://github.com/user-attachments/assets/36706b41-2101-41d6-a579-7b0c06f6aa16" />
+<img width="1000" height="700" alt="Screenshot 2026-03-24 at 00 24 58" src="https://github.com/user-attachments/assets/2986190d-6714-4042-9648-de55cd8873c9" />
 
 * **Conversion Funnel**: A visual breakdown of the respondent journey: *Invited → Sent → Email Opened → Survey Opened → Submissions*.
 * **Performance Metrics**: Real-time calculation of **Bounce Rate** and **Completion Rate**.
@@ -134,6 +150,8 @@ After data is collected, administrators can access a high-level statistical over
 
 ### 📱 4. Fully Responsive Design
 The entire application is built with a **Mobile-First** approach, ensuring full functionality across all screen sizes.
+
+<img width="376" height="830" alt="Screenshot 2026-03-24 at 00 25 31" src="https://github.com/user-attachments/assets/b7efdf73-693b-41e1-848f-3da809c2a255" />
 
 * **Desktop**: Detailed, wide-screen dashboards for complex management.
 * **Tablet & Mobile**: Adaptive navigation with retractable sidebars and touch-optimized survey forms.
