@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { adminApi } from "../../../api/adminApi";
 import type { IEmailList, IEmailContact } from "../../../types/emailList";
+import { toast } from "react-toastify";
 
 export default function ListDetailsPage() {
   const { t } = useTranslation();
@@ -23,7 +24,6 @@ export default function ListDetailsPage() {
       setList(data);
     } catch (err) {
       console.error("Error loading list:", err);
-      alert(t("EMAIL_LIST.FETCH_FAILED"));
     } finally {
       setFetching(false);
     }
@@ -35,7 +35,7 @@ export default function ListDetailsPage() {
 
   const addContact = async () => {
     if (!id) return;
-    if (!email.includes("@")) return alert(t("CONTACTS.INVALID_EMAIL"));
+    if (!email.includes("@")) return toast.error(t("CONTACTS.INVALID_EMAIL"));
 
     setLoading(true);
     try {
@@ -53,7 +53,7 @@ export default function ListDetailsPage() {
       setName("");
     } catch (err) {
       console.error("Error adding contact:", err);
-      alert(t("EMAIL_LIST.ADD_FAILED"));
+      toast.error(t("EMAIL_LIST.ADD_FAILED"));
     } finally {
       setLoading(false);
     }
@@ -72,7 +72,7 @@ export default function ListDetailsPage() {
       }));
     } catch (err) {
       console.error("Error deleting contact:", err);
-      alert(t("EMAIL_LIST.CONTACT_DELETE_FAILED"));
+      toast.error(t("EMAIL_LIST.CONTACT_DELETE_FAILED"));
     }
   };
 

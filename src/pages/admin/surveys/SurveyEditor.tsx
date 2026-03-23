@@ -41,6 +41,7 @@ export default function SurveyEditor() {
     saveSurvey,
     loading,
     deleteQuestion,
+    handleTitleBlur,
   } = useSurveyEditor(surveyId);
 
   const isReadOnly = status !== SurveyStatus.DRAFT && !!surveyId;
@@ -52,7 +53,6 @@ export default function SurveyEditor() {
   const isSaveDisabled =
     isReadOnly ||
     !title.trim() ||
-    !description.trim() ||
     questions.length === 0 ||
     questions.some((q) => !q.title.trim());
 
@@ -132,6 +132,7 @@ export default function SurveyEditor() {
               className="w-full bg-[#1e1e24] border border-gray-800 p-3 rounded-lg outline-none focus:border-blue-500 transition-all disabled:opacity-50"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
+              onBlur={handleTitleBlur}
             />
           </div>
           <div>

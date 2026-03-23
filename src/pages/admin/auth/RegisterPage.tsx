@@ -67,7 +67,7 @@ export default function RegisterPage() {
 
           {/* Email input */}
           <input
-            className="input-dark w-full px-4 py-3 border border-white/10 rounded-lg focus:border-blue-500 focus:outline-none transition-all"
+            className="input-dark w-full px-4 py-3 border border-white/100 rounded-lg focus:border-blue-500 focus:outline-none transition-all"
             placeholder={t("AUTH.EMAIL")}
             type="email"
             value={email}
@@ -76,7 +76,7 @@ export default function RegisterPage() {
 
           {/* Password input */}
           <input
-            className="input-dark w-full px-4 py-3 border border-white/10 rounded-lg focus:border-blue-500 focus:outline-none transition-all"
+            className="input-dark w-full px-4 py-3 border border-white/100 rounded-lg focus:border-blue-500 focus:outline-none transition-all"
             type="password"
             placeholder={t("AUTH.PASSWORD")}
             value={password}

@@ -56,9 +56,6 @@ export default function SurveyPage() {
       <div className="max-w-xl mx-auto p-6 pt-20 space-y-12">
         {/* Header Section */}
         <header className="space-y-6 text-center">
-          <div className="inline-block px-3 py-1 border border-[#e9c46a]/20 rounded-full text-[10px] font-mono text-[#e9c46a] uppercase tracking-widest mb-4">
-            {t("SURVEY.OFFICIAL_BADGE")}
-          </div>
           <h2 className="text-4xl md:text-5xl font-serif tracking-tight text-white leading-tight">
             {surveyData.title}
           </h2>

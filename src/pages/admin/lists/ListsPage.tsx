@@ -6,6 +6,7 @@ import { useAuth } from "../../../contexts/AuthContext";
 import type { IEmailList } from "../../../types/emailList";
 import { useTranslation } from "react-i18next";
 import { FileUp, Trash2 } from "lucide-react";
+import { toast } from "react-toastify";
 
 export default function ListsPage() {
   const [lists, setLists] = useState<IEmailList[]>([]);
@@ -38,7 +39,7 @@ export default function ListsPage() {
       await adminApi.deleteEmailList(id);
       setLists((prev) => prev.filter((l) => l.id !== id));
     } catch (err) {
-      alert(t("CONTACTS.DELETE_ERROR"));
+      toast.error(t("CONTACTS.DELETE_ERROR"));
     }
   };
 

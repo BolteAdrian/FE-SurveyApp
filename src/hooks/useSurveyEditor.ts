@@ -53,12 +53,11 @@ export function useSurveyEditor(surveyId?: string) {
     }
   }, [surveyId, setQuestions, t]);
 
-  /**
-   * Automatically generates a slug from the title if not provided.
-   */
-  useEffect(() => {
-    if (!slug) setSlug(generateSlug(title));
-  }, [title]);
+  const handleTitleBlur = () => {
+    if (!slug) {
+      setSlug(generateSlug(title));
+    }
+  };
 
   /**
    * Deletes a question from the survey.
@@ -85,12 +84,18 @@ export function useSurveyEditor(surveyId?: string) {
    * @param status - Desired survey status (DRAFT or PUBLISHED)
    */
   const saveSurvey = async (
-    status: (typeof SurveyStatus)[keyof typeof SurveyStatus],
+    statusSurvey: (typeof SurveyStatus)[keyof typeof SurveyStatus],
   ) => {
     try {
       setLoading(true);
 
-      const payload = { title, slug, ownerId: user?.id, description, status };
+      const payload = {
+        title,
+        slug,
+        ownerId: user?.id,
+        description,
+        status: statusSurvey,
+      };
 
       if (surveyId) {
         // Update existing survey
@@ -123,7 +128,7 @@ export function useSurveyEditor(surveyId?: string) {
             : t("SURVEY.PUBLISHED_SUCCESS"),
         );
       }
-      navigate("/surveys");
+      navigate("/admin");
     } catch (err) {
       console.error(err);
       toast.error(t("SURVEY.SAVE_ERROR"));
@@ -144,5 +149,6 @@ export function useSurveyEditor(surveyId?: string) {
     deleteQuestion,
     saveSurvey,
     loading,
+    handleTitleBlur,
   };
 }
