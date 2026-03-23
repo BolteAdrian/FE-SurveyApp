@@ -1,73 +1,68 @@
-# React + TypeScript + Vite
+# SurveyApp - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The client-side application for **SurveyApp**, built with **React 19**, **Vite**, and **Tailwind CSS**.  
+This dashboard allows users to create, manage, and analyze surveys with a focus on speed and smooth UX.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Backend link :
+https://github.com/BolteAdrian/BE-SurveyApp
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🚀 Key Features
 
-## Expanding the ESLint configuration
+- **React 19 & Vite**: Ultra-fast development and optimized production builds.
+- **Zustand State Management**: Lightweight and predictable state handling without the boilerplate of Redux.
+- **Dynamic Survey Builder**: Drag-and-drop question reordering using `@hello-pangea/dnd`.
+- **i18n Support**: Full localization support using `react-i18next`.
+- **Responsive UI**: Fully styled with **Tailwind CSS** and **Lucide React** icons.
+- **CSV Export**: Data analysis made easy via `papaparse`.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🏗️ Technologies
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- **Node.js**: 25.8.1
+- **npm**: 11.11
+- **Core**: React 19, TypeScript
+- **Styling**: Tailwind CSS, Autoprefixer, PostCSS
+- **State**: Zustand
+- **Routing**: React Router 7
+- **Networking**: Axios
+- **Notifications**: React Toastify
+- **Icons**: Lucide React
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 📁 Project Structure
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+survey-frontend/
+├─ src/
+│  ├─ api/          # Axios instance & API calls
+│  ├─ components/   # Shared UI components (Buttons, Inputs, Modals)
+│  ├─ hooks/        # Custom React hooks
+│  ├─ i18n/         # Localization configuration
+│  ├─ pages/        # View components (Dashboard, Survey Editor, Analytics)
+│  ├─ store/        # Zustand stores
+│  └─ utils/        # Helper functions & formatting
+├─ public/          # Static assets
+└─ index.html
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+1. Install Dependencies:
+
+npm install
+
+2. Configure Environment:
+Create a .env file in the root directory:
+VITE_API_URL=http://localhost:3000/api
+
+3. Start Development Server:
+npm run dev
+
+## 🏃‍♂️ Available Scripts
+
+Script	Description
+npm run dev	Start development server with Vite
+npm run build	Build for production (Typecheck + Vite build)
+npm run lint	Run ESLint to check code quality
+npm run preview	Preview the production build locally
