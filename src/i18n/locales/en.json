@@ -72,7 +72,7 @@
     "AUTO_GENERATED_SLUG": "Auto-generated from title, editable",
     "QUESTION_TEXT_PLACEHOLDER": "Question text",
     "ADD_OPTION": "Add option",
-    "MAX_SELECTIONS_INPUT": "Max selections",
+    "MAX_SELECTIONS_INPUT": "Max selections *",
     "MAX_LENGTH_INPUT": "Max length",
     "SAVE": "Save",
     "ENTER_QUESTION_TEXT": "Please enter the question text",

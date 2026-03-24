@@ -78,7 +78,7 @@
     "QUESTION_TEXT_PLACEHOLDER": "Textul întrebării",
     "AUTO_GENERATED_SLUG":"Auto-generat din titlu, editabil",
     "ADD_OPTION": "Adaugă opțiune",
-    "MAX_SELECTIONS_INPUT": "max selecții",
+    "MAX_SELECTIONS_INPUT": "Selecții maxime *",
     "MAX_LENGTH_INPUT": "Lungime maximă caractere *",
     "SAVE": "Salvează",
     "ENTER_QUESTION_TEXT": "Te rog introdu textul întrebării",

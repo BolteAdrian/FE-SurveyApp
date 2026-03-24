@@ -146,32 +146,55 @@ export default function QuestionEditor({
             />
           </div>
 
-          {/* REQUIRED CHECKBOX */}
-          <div className="flex items-center gap-3 py-2">
-            <label className="relative flex items-center cursor-pointer group">
-              <input
-                type="checkbox"
-                className="sr-only"
-                checked={required}
-                onChange={(e) => setRequired(e.target.checked)}
-              />
-              <div
-                className={`w-5 h-5 rounded border transition-all flex items-center justify-center ${
-                  required
-                    ? "bg-[#55d6a0] border-[#55d6a0]"
-                    : "bg-[#1A1A22] border-gray-700 group-hover:border-gray-500"
-                }`}
-              >
-                {required && (
-                  <Check size={14} className="text-[#111114] stroke-[3px]" />
-                )}
-              </div>
-              <span className="ml-3 text-sm font-medium text-gray-400 group-hover:text-gray-300 transition-colors">
-                {t("SURVEY.REQUIRED")}
-              </span>
-            </label>
+          <div className="flex w-full items-end justify-between gap-6">
+            <div className="flex items-center gap-2 pb-3">
+              <label className="relative flex items-center cursor-pointer group">
+                <input
+                  type="checkbox"
+                  className="sr-only"
+                  checked={required}
+                  onChange={(e) => setRequired(e.target.checked)}
+                />
+                <div
+                  className={`w-5 h-5 rounded border transition-all flex items-center justify-center ${
+                    required
+                      ? "bg-[#55d6a0] border-[#55d6a0]"
+                      : "bg-[#1A1A22] border-gray-700 group-hover:border-gray-500"
+                  }`}
+                >
+                  {required && (
+                    <Check size={14} className="text-[#111114] stroke-[3px]" />
+                  )}
+                </div>
+                <span className="ml-3 text-sm font-medium text-gray-400 group-hover:text-gray-300 transition-colors">
+                  {t("SURVEY.REQUIRED")}
+                </span>
+              </label>
+            </div>
+            {/* LIMITS (Max Selections / Max Length) */}
+            <div className="flex-1 space-y-2">
+              <label className="block text-xs text-gray-500 font-mono uppercase tracking-wider">
+                {type === QuestionType.CHOICE
+                  ? t("SURVEY.MAX_SELECTIONS_INPUT")
+                  : t("SURVEY.MAX_LENGTH_INPUT")}
+              </label>
+              {type === QuestionType.CHOICE ? (
+                <input
+                  type="number"
+                  value={maxSelections}
+                  onChange={(e) => setMaxSelections(Number(e.target.value))}
+                  className="w-full bg-[#1A1A22] border border-gray-800 p-3 rounded-xl text-white outline-none focus:border-blue-500 transition-all"
+                />
+              ) : (
+                <input
+                  type="number"
+                  value={maxLength}
+                  onChange={(e) => setMaxLength(Number(e.target.value))}
+                  className="w-full bg-[#1A1A22] border border-gray-800 p-3 rounded-xl text-white outline-none focus:border-blue-500 transition-all"
+                />
+              )}
+            </div>
           </div>
-
           {/* OPTIONS SECTION */}
           {type === QuestionType.CHOICE && (
             <div className="space-y-4">
@@ -217,30 +240,6 @@ export default function QuestionEditor({
               </button>
             </div>
           )}
-
-          {/* LIMITS (Max Selections / Max Length) */}
-          <div className="space-y-1.5">
-            <label className="block text-xs text-gray-500 font-mono uppercase tracking-wider">
-              {type === QuestionType.CHOICE
-                ? t("SURVEY.MAX_SELECTIONS_INPUT")
-                : t("SURVEY.MAX_LENGTH_INPUT")}
-            </label>
-            {type === QuestionType.CHOICE ? (
-              <input
-                type="number"
-                value={maxSelections}
-                onChange={(e) => setMaxSelections(Number(e.target.value))}
-                className="w-full bg-[#1A1A22] border border-gray-800 p-3 rounded-xl text-white outline-none focus:border-blue-500 transition-all"
-              />
-            ) : (
-              <input
-                type="number"
-                value={maxLength}
-                onChange={(e) => setMaxLength(Number(e.target.value))}
-                className="w-full bg-[#1A1A22] border border-gray-800 p-3 rounded-xl text-white outline-none focus:border-blue-500 transition-all"
-              />
-            )}
-          </div>
 
           {/* ACTIONS */}
           <div className="flex justify-end gap-3 pt-6">
