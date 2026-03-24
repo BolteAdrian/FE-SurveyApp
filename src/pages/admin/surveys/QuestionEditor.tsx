@@ -8,7 +8,6 @@ import { useSurveyContext } from "../../../contexts/SurveyContext";
 import { adminApi } from "../../../api/adminApi";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 import { Check, Trash2 } from "lucide-react";
 
 type QuestionEditorProps = {
@@ -24,7 +23,6 @@ export default function QuestionEditor({
 }: QuestionEditorProps) {
   const { t } = useTranslation();
   const { questions, setQuestions } = useSurveyContext();
-  const navigate = useNavigate();
   const [type, setType] = useState<keyof typeof QuestionType>(
     question?.type as keyof typeof QuestionType,
   );
@@ -41,7 +39,9 @@ export default function QuestionEditor({
   const [maxLength, setMaxLength] = useState(question?.maxLength || 1000);
   const isSaveDisabled =
     !title.trim() ||
-    (type === QuestionType.CHOICE && options.some((o) => !o.trim()));
+    (type === QuestionType.CHOICE &&
+      (options.some((o) => !o.trim()) || maxSelections < 1)) ||
+    (type === QuestionType.TEXT && maxLength < 1);
 
   const handleSave = async () => {
     if (!title.trim()) {
@@ -76,7 +76,6 @@ export default function QuestionEditor({
           prev.map((q) => (q.id === question.id ? saved : q)),
         );
         toast.success(t("SURVEY.QUESTION_UPDATED"));
-        navigate("/admin");
       } else if (surveyId && !question?.id) {
         const saved = await adminApi.createQuestion(surveyId, payload);
         setQuestions((prev) => [...prev, saved]);
@@ -109,13 +108,17 @@ export default function QuestionEditor({
         {/* HEADER */}
         <div className="bg-[#111114] p-3 border-b border-gray-800 flex items-center gap-2">
           <span className="text-[10px] font-mono text-gray-600 ml-4 uppercase tracking-widest">
-            {question ? t("SURVEY.EDIT_QUESTION") : t("SURVEY.NEW_QUESTION")}
+            {question?.id && !question.id.toString().includes("temp")
+              ? t("SURVEY.EDIT_QUESTION")
+              : t("SURVEY.NEW_QUESTION")}
           </span>
         </div>
 
         <div className="p-10 space-y-8">
           <h2 className="text-3xl font-serif text-[#e8e6e1]">
-            {question ? t("SURVEY.EDIT_QUESTION") : t("SURVEY.NEW_QUESTION")}
+            {question?.id && !question.id.toString().includes("temp")
+              ? t("SURVEY.EDIT_QUESTION")
+              : t("SURVEY.NEW_QUESTION")}
           </h2>
 
           {/* TYPE */}
@@ -181,15 +184,23 @@ export default function QuestionEditor({
               {type === QuestionType.CHOICE ? (
                 <input
                   type="number"
+                  min="1"
                   value={maxSelections}
-                  onChange={(e) => setMaxSelections(Number(e.target.value))}
+                  onChange={(e) => {
+                    const val = Number(e.target.value);
+                    setMaxSelections(val < 1 ? 1 : val);
+                  }}
                   className="w-full bg-[#1A1A22] border border-gray-800 p-3 rounded-xl text-white outline-none focus:border-blue-500 transition-all"
                 />
               ) : (
                 <input
                   type="number"
+                  min="1"
                   value={maxLength}
-                  onChange={(e) => setMaxLength(Number(e.target.value))}
+                  onChange={(e) => {
+                    const val = Number(e.target.value);
+                    setMaxLength(val < 1 ? 1 : val);
+                  }}
                   className="w-full bg-[#1A1A22] border border-gray-800 p-3 rounded-xl text-white outline-none focus:border-blue-500 transition-all"
                 />
               )}

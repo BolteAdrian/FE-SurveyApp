@@ -95,15 +95,19 @@ export default function ListDetailsPage() {
     if (!id || !contactToDelete) return;
     try {
       await adminApi.deleteContactFromList(id, contactToDelete);
+
       setList((prev: any) => ({
         ...prev,
         emailContacts: prev.emailContacts.filter(
           (c: any) => c.id !== contactToDelete,
         ),
       }));
-      toast.success(t("CONTACTS.DELETE_SUCCESS"));
-    } catch (err) {
-      toast.error(t("EMAIL_LIST.CONTACT_DELETE_FAILED"));
+
+      toast.success(t("CONTACTS.DELETE_SUCCESS") || "Contact deleted");
+    } catch (err: any) {
+      const errorMessage =
+        err.response?.data?.message || t("EMAIL_LIST.CONTACT_DELETE_FAILED");
+      toast.error(errorMessage);
     } finally {
       setIsModalOpen(false);
       setContactToDelete(null);
@@ -145,9 +149,6 @@ export default function ListDetailsPage() {
 
         <div className="space-y-1">
           <h2 className="text-3xl font-serif text-[#e8e6e1]">{list.name}</h2>
-          <p className="text-[11px] font-mono text-gray-600 uppercase tracking-widest">
-            {t("EMAIL_LIST.ID")}: {id?.slice(0, 8)}...
-          </p>
         </div>
 
         {/* ADD CONTACT FORM */}

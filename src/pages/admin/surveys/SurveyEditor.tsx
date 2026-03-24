@@ -117,7 +117,13 @@ export default function SurveyEditor() {
 
   return (
     <div className="min-h-screen bg-[#111114] text-[#e8e6e1] flex flex-col lg:flex-row gap-8 p-4 md:p-8">
-      {/* LEFT/TOP PANEL: Survey Details */}
+      <ConfirmModal
+        isOpen={confirmOpen}
+        title={t("SURVEY.CONFIRM_DELETE_QUESTION")}
+        message={t("SURVEY.ARE_YOU_SURE_DELETE")}
+        onConfirm={handleConfirmDelete}
+        onCancel={handleCancelDelete}
+      />
       <div className="w-full lg:w-80 space-y-6">
         <h2 className="text-xs font-bold text-gray-500 uppercase tracking-widest mt-[9px]">
           {t("SURVEY.DETAILS")}
@@ -156,7 +162,9 @@ export default function SurveyEditor() {
               value={slug}
               onChange={(e) => setSlug(e.target.value)}
             />
-            <p className="block text-xs text-gray-500 font-mono">{t("SURVEY.AUTO_GENERATED_SLUG")}</p>
+            <p className="block text-xs text-gray-500 font-mono">
+              {t("SURVEY.AUTO_GENERATED_SLUG")}
+            </p>
           </div>
         </div>
 
@@ -371,14 +379,6 @@ export default function SurveyEditor() {
           onClose={() => setEditingQuestion(null)}
         />
       )}
-
-      <ConfirmModal
-        isOpen={confirmOpen}
-        title={t("SURVEY.CONFIRM_DELETE_QUESTION")}
-        message={t("SURVEY.ARE_YOU_SURE_DELETE")}
-        onConfirm={handleConfirmDelete}
-        onCancel={handleCancelDelete}
-      />
     </div>
   );
 }

@@ -63,7 +63,7 @@
     "DETAILS": "Detalii sondaj",
     "DESCRIPTION": "Descriere",
     "AUTO_GENERATED": "Auto-generat din titlu",
-    "SAVE_DRAFT": "Salvează draft",
+    "SAVE_DRAFT": "Salvează ciornă",
     "MULTI_CHOICE": "Alegere multiplă",
     "FREE_TEXT": "Text liber",
     "REQUIRED": "Obligatoriu",
@@ -260,12 +260,12 @@
       "COMMENTS": "Comentarii"
     },
     "CARD": {
-      "TYPE_CHOICE": "multi-choice",
+      "TYPE_CHOICE": "alegere multiplă",
       "TYPE_TEXT": "text liber",
       "MAX_SELECTIONS": "max {{count}}",
       "MAX_CHARACTERS": "max {{count}} caractere",
       "RESPONSES_INFO": "{{count}} răspunsuri din {{total}}",
-      "MULTI_CHOICE_HINT": "La întrebările multi-choice, suma procentelor poate depăși 100%. Procentele sunt calculate din numărul de respondenți la această întrebare ({{count}}).",
+      "MULTI_CHOICE_HINT": "La întrebările cu alegere multiplă, suma procentelor poate depăși 100%. Procentele sunt calculate din numărul de respondenți la această întrebare ({{count}}).",
       "VIEW_COMMENTS": "Vezi toate comentariile"
     },
     "COMMENTS_SECTION": {

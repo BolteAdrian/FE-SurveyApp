@@ -53,10 +53,13 @@ export default function ListsPage() {
     if (!listToDelete) return;
     try {
       await adminApi.deleteEmailList(listToDelete);
+
       setLists((prev) => prev.filter((l) => l.id !== listToDelete));
       toast.success(t("CONTACTS.DELETE_SUCCESS_LIST") || "List deleted");
-    } catch (err) {
-      toast.error(t("CONTACTS.DELETE_ERROR"));
+    } catch (err: any) {
+      const errorMessage =
+        err.response?.data?.message || t("CONTACTS.DELETE_ERROR");
+      toast.error(errorMessage);
     } finally {
       setIsDeleteModalOpen(false);
       setListToDelete(null);
