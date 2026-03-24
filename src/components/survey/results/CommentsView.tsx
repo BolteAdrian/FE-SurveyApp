@@ -21,8 +21,6 @@ export function CommentsView({
   setSearchQuery,
 }: CommentsViewProps) {
   const { t } = useTranslation();
-
-
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
@@ -40,7 +38,6 @@ export function CommentsView({
 
   return (
     <div className="space-y-6 animate-in fade-in duration-500">
-      {/* FILTRE: SEARCH & SELECT */}
       <div className="flex flex-col md:flex-row gap-4">
         <div className="flex-1 relative">
           <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm">
@@ -75,11 +72,15 @@ export function CommentsView({
         </div>
       </div>
 
-      {/* STATS: NUMAR RASPUNSURI */}
       {!loading && comments.length > 0 && (
         <div className="text-[10px] font-mono text-gray-600 uppercase tracking-widest px-1">
           {comments.length} {t("RESULTS.COMMENTS_SECTION.RESPONSES_COUNT")} ·
-          pagina {currentPage} din {totalPages || 1}
+          <span className="text-gray-500 font-mono">
+            {t("RESULTS.COMMENTS_SECTION.PAGE_INFO", {
+              current: currentPage,
+              total: totalPages || 1,
+            })}
+          </span>
         </div>
       )}
 
@@ -104,17 +105,19 @@ export function CommentsView({
                 </span>
                 <span className="text-gray-800">·</span>
                 <span>
-                  {new Date(ans.createdAt).toLocaleDateString("ro-RO", {
-                    day: "2-digit",
-                    month: "short",
-                    year: "numeric",
-                  })}
+                  {new Date(ans.response.submittedAt).toLocaleDateString(
+                    "ro-RO",
+                    {
+                      day: "2-digit",
+                      month: "short",
+                      year: "numeric",
+                    },
+                  )}
                 </span>
               </div>
             </div>
           ))}
 
-          {/* EMPTY STATE */}
           {comments.length === 0 && (
             <div className="flex flex-col items-center justify-center py-24 text-gray-700 border border-dashed border-gray-800/50 rounded-3xl">
               <p className="font-mono text-xs uppercase tracking-[0.3em]">
@@ -123,7 +126,6 @@ export function CommentsView({
             </div>
           )}
 
-          {/* PAGINARE CLIENT-SIDE */}
           {totalPages > 1 && (
             <div className="flex justify-center items-center gap-2 pt-8">
               <button
@@ -131,7 +133,7 @@ export function CommentsView({
                 onClick={() => setCurrentPage((prev) => prev - 1)}
                 className="px-4 py-2 rounded-lg border border-gray-800 text-[10px] font-mono uppercase tracking-widest disabled:opacity-30 hover:bg-gray-800/40 transition-all"
               >
-                ← Prev
+                ← {t("RESULTS.COMMENTS_SECTION.PREV")}
               </button>
 
               {[...Array(totalPages)].map((_, i) => (
@@ -153,7 +155,7 @@ export function CommentsView({
                 onClick={() => setCurrentPage((prev) => prev + 1)}
                 className="px-4 py-2 rounded-lg border border-gray-800 text-[10px] font-mono uppercase tracking-widest disabled:opacity-30 hover:bg-gray-800/40 transition-all"
               >
-                Next →
+                {t("RESULTS.COMMENTS_SECTION.NEXT")} →
               </button>
             </div>
           )}

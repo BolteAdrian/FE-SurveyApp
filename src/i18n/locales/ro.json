@@ -134,7 +134,22 @@
     "INVITATIONS_NOT_SENT_YET": "Invitațiile nu pot fi trimise încă",
     "CLOSED_SUCCESS": "Sondajul a fost închis"
   },
+  "PAGINATION": {
+    "PAGE": "Pagina",
+    "NEXT": "Înainte",
+    "PREVIOUS": "Înapoi"
+  },
   "CONTACTS": {
+    "MY_LISTS": "Listele Mele",
+    "SEARCH_LISTS": "Caută liste...",
+    "DELETE_LIST_TITLE": "Șterge Lista",
+    "DELETE_LIST_CONFIRM_MESSAGE": "Ești sigur că vrei să ștergi această listă întreagă? Toate contactele din ea vor fi pierdute.",
+    "DELETE_SUCCESS_LIST": "Lista a fost ștearsă cu succes.",
+    "DELETE_SUCCESS": "Contactul a fost șters cu succes!",
+    "DELETE_TITLE": "Șterge Contact",
+    "SEARCH_PLACEHOLDER": "Caută după nume sau email...",
+    "NO_RESULTS": "Nu am găsit nicio valoare care să se potrivească căutării.",
+    "ADD_SUCCESS": "Contact adăugat cu succes!",
     "INVALID_FORMAT": "Format invalid",
     "ROW": "Rând",
     "MAX_ROWS": "Max. 10.000 rânduri",
@@ -259,8 +274,8 @@
       "PAGE_INFO": "pagina {{current}} din {{total}}",
       "EMPTY": "Nu există rezultate pentru căutarea curentă.",
       "ANONYMOUS": "Anonim",
-      "PREV": "Prev",
-      "NEXT": "Next"
+      "PREV": "Înapoi",
+      "NEXT": "Înainte"
     }
   },
   "INVITATIONS": {

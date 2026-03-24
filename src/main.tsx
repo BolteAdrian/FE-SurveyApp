@@ -4,11 +4,14 @@ import "./index.css";
 import App from "./App.tsx";
 import { SurveyProvider } from "./contexts/SurveyContext.tsx";
 import "./i18n";
+import { AuthProvider } from "./contexts/AuthContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <SurveyProvider>
-      <App />
-    </SurveyProvider>
+    <AuthProvider>
+      <SurveyProvider>
+        <App />
+      </SurveyProvider>
+    </AuthProvider>
   </StrictMode>,
 );

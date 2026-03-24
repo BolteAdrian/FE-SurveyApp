@@ -1,9 +1,11 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { adminApi } from "../../../api/adminApi";
 import type { IEmailList, IEmailContact } from "../../../types/emailList";
 import { toast } from "react-toastify";
+import { emailRegex } from "../../../utils/helpers";
+import { ConfirmModal } from "../../../components/ConfirmModal";
 
 export default function ListDetailsPage() {
   const { t } = useTranslation();
@@ -15,6 +17,11 @@ export default function ListDetailsPage() {
   const [name, setName] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [fetching, setFetching] = useState<boolean>(true);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [contactToDelete, setContactToDelete] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const itemsPerPage = 10;
 
   const fetchList = useCallback(async () => {
     if (!id) return;
@@ -27,20 +34,40 @@ export default function ListDetailsPage() {
     } finally {
       setFetching(false);
     }
-  }, [id, t]);
+  }, [id]);
 
   useEffect(() => {
     fetchList();
   }, [fetchList]);
 
+  const filteredContacts = useMemo(() => {
+    if (!list?.emailContacts) return [];
+    return list.emailContacts.filter(
+      (contact) =>
+        contact.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (contact.name &&
+          contact.name.toLowerCase().includes(searchTerm.toLowerCase())),
+    );
+  }, [list?.emailContacts, searchTerm]);
+
+  const totalPages = Math.ceil(filteredContacts.length / itemsPerPage);
+  const currentItems = filteredContacts.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage,
+  );
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm]);
+
   const addContact = async () => {
     if (!id) return;
-    if (!email.includes("@")) return toast.error(t("CONTACTS.INVALID_EMAIL"));
+    if (!emailRegex.test(email))
+      return toast.error(t("CONTACTS.INVALID_EMAIL"));
 
     setLoading(true);
     try {
       const newContact = await adminApi.addContactToList(id, { email, name });
-
       setList((prev) => {
         if (!prev) return null;
         return {
@@ -48,9 +75,9 @@ export default function ListDetailsPage() {
           emailContacts: [newContact, ...(prev.emailContacts || [])],
         };
       });
-
       setEmail("");
       setName("");
+      toast.success(t("CONTACTS.ADD_SUCCESS"));
     } catch (err) {
       console.error("Error adding contact:", err);
       toast.error(t("EMAIL_LIST.ADD_FAILED"));
@@ -59,20 +86,27 @@ export default function ListDetailsPage() {
     }
   };
 
-  const deleteContact = async (contactId: string) => {
-    if (!id || !confirm(t("CONTACTS.DELETE_CONFIRM"))) return;
+  const openDeleteModal = (contactId: string) => {
+    setContactToDelete(contactId);
+    setIsModalOpen(true);
+  };
 
+  const confirmDelete = async () => {
+    if (!id || !contactToDelete) return;
     try {
-      await adminApi.deleteContactFromList(id, contactId);
+      await adminApi.deleteContactFromList(id, contactToDelete);
       setList((prev: any) => ({
         ...prev,
         emailContacts: prev.emailContacts.filter(
-          (c: any) => c.id !== contactId,
+          (c: any) => c.id !== contactToDelete,
         ),
       }));
+      toast.success(t("CONTACTS.DELETE_SUCCESS"));
     } catch (err) {
-      console.error("Error deleting contact:", err);
       toast.error(t("EMAIL_LIST.CONTACT_DELETE_FAILED"));
+    } finally {
+      setIsModalOpen(false);
+      setContactToDelete(null);
     }
   };
 
@@ -91,6 +125,15 @@ export default function ListDetailsPage() {
 
   return (
     <div className="min-h-screen text-[#e8e6e1] flex flex-col lg:flex-row gap-8 p-6">
+      {/* CONFIRM MODAL */}
+      <ConfirmModal
+        isOpen={isModalOpen}
+        title={t("CONTACTS.DELETE_TITLE") || "Delete Contact"}
+        message={t("CONTACTS.DELETE_CONFIRM")}
+        onConfirm={confirmDelete}
+        onCancel={() => setIsModalOpen(false)}
+      />
+
       {/* LEFT PANEL */}
       <div className="w-full lg:w-80 space-y-6">
         <button
@@ -107,6 +150,7 @@ export default function ListDetailsPage() {
           </p>
         </div>
 
+        {/* ADD CONTACT FORM */}
         <div className="bg-[#1e1e24] border border-gray-800 rounded-2xl p-6 space-y-6 shadow-xl">
           <h2 className="text-xs font-bold text-gray-500 uppercase tracking-widest border-b border-gray-800 pb-3">
             {t("CONTACTS.ADD_CONTACT")}
@@ -177,6 +221,16 @@ export default function ListDetailsPage() {
               ({list.emailContacts?.length || 0})
             </span>
           </h2>
+
+          {/* SEARCH INPUT */}
+          <input
+            className="bg-[#1e1e24] border border-gray-800 px-4 py-2 rounded-xl text-xs outline-none focus:border-gray-600 w-full md:w-64"
+            placeholder={
+              t("CONTACTS.SEARCH_PLACEHOLDER") || "Search by name or email..."
+            }
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
         </div>
 
         <div className="bg-[#1e1e24] border border-gray-800 rounded-2xl overflow-hidden shadow-2xl">
@@ -199,7 +253,7 @@ export default function ListDetailsPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-800/50">
-                {list.emailContacts?.map((c: IEmailContact) => (
+                {currentItems.map((c: IEmailContact) => (
                   <tr
                     key={c.id}
                     className="hover:bg-[#1A1A22]/50 transition-colors group"
@@ -225,7 +279,7 @@ export default function ListDetailsPage() {
                     </td>
                     <td className="px-6 py-4 text-right">
                       <button
-                        onClick={() => deleteContact(c.id)}
+                        onClick={() => openDeleteModal(c.id)}
                         className="opacity-0 group-hover:opacity-100 p-2 text-gray-600 hover:text-red-500 transition-all"
                       >
                         🗑
@@ -237,12 +291,35 @@ export default function ListDetailsPage() {
             </table>
           </div>
 
-          {(!list.emailContacts || list.emailContacts.length === 0) && (
+          {filteredContacts.length === 0 && (
             <div className="py-20 text-center text-gray-600 font-mono text-sm">
-              {t("CONTACTS.EMPTY_LIST")}
+              {searchTerm ? t("CONTACTS.NO_RESULTS") : t("CONTACTS.EMPTY_LIST")}
             </div>
           )}
         </div>
+
+        {/* PAGINATION CONTROLS */}
+        {totalPages > 1 && (
+          <div className="flex justify-center items-center gap-4 mt-6 font-mono text-xs">
+            <button
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+              disabled={currentPage === 1}
+              className="px-4 py-2 border border-gray-800 rounded-lg disabled:opacity-30 hover:bg-gray-800"
+            >
+              {t("PAGINATION.PREVIOUS") || "Prev"}
+            </button>
+            <span className="text-gray-500">
+              {t("PAGINATION.PAGE") || "Page"} {currentPage} / {totalPages}
+            </span>
+            <button
+              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+              disabled={currentPage === totalPages}
+              className="px-4 py-2 border border-gray-800 rounded-lg disabled:opacity-30 hover:bg-gray-800"
+            >
+              {t("PAGINATION.NEXT") || "Next"}
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

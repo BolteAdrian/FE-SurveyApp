@@ -118,6 +118,7 @@ export default function ResultsPage() {
                     key={q.id}
                     question={q}
                     index={i}
+                    totalSurveyResponses={data.summary.submitted}
                     onGoToComments={() => {
                       setSelectedQuestionId(q.id);
                       setActiveTab("comments");

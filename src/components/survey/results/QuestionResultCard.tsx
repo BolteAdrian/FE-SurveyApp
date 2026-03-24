@@ -4,12 +4,14 @@ import type { IQuestionWithStats } from "../../../types/survey";
 interface QuestionResultCardProps {
   question: IQuestionWithStats;
   index: number;
+  totalSurveyResponses: number;
   onGoToComments: () => void;
 }
 
 export function QuestionResultCard({
   question,
   index,
+  totalSurveyResponses,
   onGoToComments,
 }: QuestionResultCardProps) {
   const { t } = useTranslation();
@@ -47,7 +49,7 @@ export function QuestionResultCard({
             <span className="text-gray-500">
               {t("RESULTS.CARD.RESPONSES_INFO", {
                 count: question.totalAnswers || 0,
-                total: 152,
+                total: totalSurveyResponses,
               })}
             </span>
           </div>
