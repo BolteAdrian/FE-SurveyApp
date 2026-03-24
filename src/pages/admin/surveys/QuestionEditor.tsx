@@ -141,7 +141,6 @@ export default function QuestionEditor({
             </label>
             <input
               className="w-full bg-[#1A1A22] border border-gray-800 p-4 rounded-xl text-white outline-none focus:border-blue-500 transition-all placeholder:text-gray-700"
-              placeholder={t("SURVEY.QUESTION_TEXT_PLACEHOLDER")}
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />

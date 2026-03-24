@@ -152,10 +152,11 @@ export default function SurveyEditor() {
             </label>
             <input
               disabled={isReadOnly}
-              className="w-full bg-[#1e1e24] border border-gray-800 p-3 rounded-lg text-green-500 font-mono text-sm disabled:opacity-50"
+              className="w-full bg-[#1e1e24] mb-2 border border-gray-800 p-3 rounded-lg text-green-500 font-mono text-sm disabled:opacity-50"
               value={slug}
               onChange={(e) => setSlug(e.target.value)}
             />
+            <p className="block text-xs text-gray-500 font-mono">{t("SURVEY.AUTO_GENERATED_SLUG")}</p>
           </div>
         </div>
 
@@ -332,7 +333,9 @@ export default function SurveyEditor() {
                                   <Edit2 size={12} /> {t("SURVEY.EDIT")}
                                 </button>
                                 <button
-                                  onClick={() => handleDeleteClick(q.id as string, index)}
+                                  onClick={() =>
+                                    handleDeleteClick(q.id as string, index)
+                                  }
                                   className="text-xs font-mono text-red-500 flex items-center gap-1"
                                 >
                                   <Trash2 size={12} /> {t("SURVEY.DELETE")}
