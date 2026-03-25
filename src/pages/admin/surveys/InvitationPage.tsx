@@ -25,6 +25,7 @@ export default function InvitationsPage() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [sending, setSending] = useState<boolean>(false);
+  const [quickLink, setQuickLink] = useState<string>("");
 
   useEffect(() => {
     if (id) fetchData();
@@ -59,6 +60,17 @@ export default function InvitationsPage() {
       toast.error(t("INVITATIONS.ERRORS.PREVIEW"));
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleGenerateQuickLink = async () => {
+    if (!id) return;
+    try {
+      const data = await adminApi.generateQuickLink(id);
+      setQuickLink(data.inviteUrl);
+      toast.info(t("INVITATIONS.SEND_SECTION.LINK_GENERATED"));
+    } catch (err) {
+      toast.error(t("INVITATIONS.SEND_SECTION.ERROR_GENERATE_LINK"));
     }
   };
 
@@ -179,6 +191,43 @@ export default function InvitationsPage() {
             </div>
           </div>
         )}
+      </div>
+
+      <div className="bg-[#16161a] border border-gray-800/40 rounded-xl p-6 w-full animate-in fade-in slide-in-from-top-2 duration-500">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="space-y-1 md:w-1/3">
+            <p className="text-xs text-gray-600 font-mono italic">
+              {t("INVITATIONS.SEND_SECTION.GENERATE_LINK_MESSAGE")}
+            </p>
+          </div>
+
+          <div className="flex w-full md:w-auto md:flex-1 gap-2 items-center justify-end">
+            {quickLink && (
+              <div className="flex w-full gap-2 animate-in zoom-in duration-300">
+                <input
+                  readOnly
+                  value={quickLink}
+                  className="flex-1 w-full bg-black border border-gray-800 rounded px-3 py-2 text-[10px] font-mono text-[#f3d382] select-all outline-none"
+                />
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(quickLink);
+                    toast.success("Copiat!");
+                  }}
+                  className="px-6 py-2 bg-gray-800 text-white rounded text-[10px] font-bold uppercase hover:bg-gray-700 transition"
+                >
+                  {t("INVITATIONS.SEND_SECTION.COPY")}
+                </button>
+              </div>
+            )}
+            <button
+              onClick={handleGenerateQuickLink}
+              className="w-full md:w-auto px-6 py-3 bg-[#f3d382]/10 border border-[#f3d382]/30 text-[#f3d382] rounded-lg font-mono text-[10px] font-bold hover:bg-[#f3d382]/20 transition-all active:scale-95"
+            >
+              {t("INVITATIONS.SEND_SECTION.GENERATE_LINK")}
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* TABLE SECTION with Overflow for Tablet/Mobile */}

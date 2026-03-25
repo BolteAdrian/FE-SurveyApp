@@ -76,7 +76,7 @@
     "EDIT_QUESTION": "Editează întrebare",
     "NEW_QUESTION": "Întrebare nouă",
     "QUESTION_TEXT_PLACEHOLDER": "Textul întrebării",
-    "AUTO_GENERATED_SLUG":"Auto-generat din titlu, editabil",
+    "AUTO_GENERATED_SLUG": "Auto-generat din titlu, editabil",
     "ADD_OPTION": "Adaugă opțiune",
     "MAX_SELECTIONS_INPUT": "Selecții maxime *",
     "MAX_LENGTH_INPUT": "Lungime maximă caractere *",
@@ -301,6 +301,11 @@
       "NOT_FOUND": "Sondajul nu a fost găsit"
     },
     "SEND_SECTION": {
+      "LINK_GENERATED": "Link generat!",
+      "ERROR_GENERATE_LINK": "Eroare la generarea link-ului.",
+      "GENERATE_LINK_MESSAGE": "Generează un link instant fără a trimite email.",
+      "GENERATE_LINK": "GENEREAZĂ LINK",
+      "COPY": "COPIAZĂ",
       "TITLE": "Trimite invitații",
       "SUBTITLE": "Selectează listă de contacte",
       "CHOOSE_LIST": "Alege Listă de contacte",

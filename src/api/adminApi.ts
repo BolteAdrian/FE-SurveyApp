@@ -245,4 +245,14 @@ export const adminApi = {
     });
     return res.data;
   },
+
+  /**
+   * Generate a quick test link for the admin
+   */
+  generateQuickLink: async (surveyId: string) => {
+    const res = await api.post<{ inviteUrl: string }>(
+      `/api/surveys/${surveyId}/invitations/quick-link`,
+    );
+    return res.data;
+  },
 };

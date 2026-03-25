@@ -301,6 +301,11 @@
       "NOT_FOUND": "Survey not found"
     },
     "SEND_SECTION": {
+      "LINK_GENERATED": "Link generated!",
+      "ERROR_GENERATE_LINK": "Error generating link.",
+      "GENERATE_LINK_MESSAGE": "Generate a link without sending an email.",
+      "GENERATE_LINK": "GENERATE LINK",
+      "COPY": "COPY",
       "TITLE": "Send invitations",
       "SUBTITLE": "Select contact list",
       "CHOOSE_LIST": "Choose contact list",
